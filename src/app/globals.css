@@ -1,0 +1,206 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-sans: 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-serif: 'Instrument Serif', Georgia, serif;
+  --font-mono: 'Geist Mono', ui-monospace, SFMono-Regular, monospace;
+
+  /* Default Light theme variables */
+  --bg: #F6F7F4;
+  --bg-raised: #FFFFFF;
+  --glass: rgba(255, 255, 255, 0.72);
+  --glass-strong: rgba(255, 255, 255, 0.90);
+  --border: rgba(10, 15, 13, 0.08);
+  --border-highlight: rgba(255, 255, 255, 0.85);
+  --text: #101815;
+  --text-muted: #4A554F;
+  --accent: #1F9D6B;
+  --accent-deep: #167A53;
+  --accent-glow: rgba(31, 157, 107, 0.20);
+  --gold: #A8730F;
+  --attention: #D97706;
+  --critical: #DC2626;
+
+  --dot-grid-color: rgba(16, 24, 21, 0.06);
+  --glass-shadow: 0 12px 32px rgba(16, 24, 21, 0.06);
+}
+
+.dark, [data-theme="dark"] {
+  /* Dark theme (Default for Lablink / Winumu style) */
+  --bg: #0A0F0D;
+  --bg-raised: #101815;
+  --glass: rgba(255, 255, 255, 0.045);
+  --glass-strong: rgba(255, 255, 255, 0.075);
+  --border: rgba(255, 255, 255, 0.10);
+  --border-highlight: rgba(255, 255, 255, 0.08);
+  --text: #F2F1EA;
+  --text-muted: #A9B1AC;
+  --accent: #3DBE7A;
+  --accent-deep: #1F9D6B;
+  --accent-glow: rgba(61, 190, 122, 0.35);
+  --gold: #E3B04B;
+  --attention: #F2994A;
+  --critical: #EF5B5B;
+
+  --dot-grid-color: rgba(255, 255, 255, 0.04);
+  --glass-shadow: 0 12px 40px rgba(0, 0, 0, 0.40);
+}
+
+* {
+  border-color: var(--border);
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Background subtle dot-grid */
+.bg-dot-grid {
+  background-image: radial-gradient(var(--dot-grid-color) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Radial ambient green glow */
+.ambient-glow {
+  background: radial-gradient(circle at 50% 20%, rgba(61, 190, 122, 0.12) 0%, rgba(31, 157, 107, 0.05) 35%, transparent 70%);
+}
+
+.ambient-glow-bottom {
+  background: radial-gradient(circle at 50% 80%, rgba(61, 190, 122, 0.10) 0%, transparent 60%);
+}
+
+/* Glass Surfaces (.glass and .glass-strong) */
+.glass {
+  background: var(--glass);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border: 1px solid var(--border);
+  box-shadow: inset 0 1px 0 var(--border-highlight), var(--glass-shadow);
+}
+
+.glass-strong {
+  background: var(--glass-strong);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  border: 1px solid var(--border);
+  box-shadow: inset 0 1px 0 var(--border-highlight), var(--glass-shadow);
+}
+
+@media (max-width: 640px) {
+  .glass, .glass-strong {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+}
+
+/* Fallback for browsers lacking backdrop-filter */
+@supports not (backdrop-filter: blur(1px)) {
+  .glass {
+    background: var(--bg-raised);
+  }
+  .glass-strong {
+    background: var(--bg-raised);
+  }
+}
+
+/* Primary Green Pill Button */
+.btn-primary-pill {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-deep) 100%);
+  color: #0A0F0D;
+  font-weight: 700;
+  border-radius: 9999px;
+  box-shadow: 0 4px 20px var(--accent-glow);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.btn-primary-pill:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px var(--accent-glow);
+  filter: brightness(1.05);
+}
+
+/* Secondary Glass Pill Button */
+.btn-secondary-pill {
+  background: var(--glass);
+  color: var(--text);
+  font-weight: 600;
+  border: 1px solid var(--border);
+  border-radius: 9999px;
+  box-shadow: inset 0 1px 0 var(--border-highlight);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.btn-secondary-pill:hover {
+  background: var(--glass-strong);
+  color: var(--text);
+  border-color: rgba(255, 255, 255, 0.18);
+  transform: translateY(-1px);
+}
+
+/* Square Icon Glass Button (44px min touch target) */
+.btn-icon-glass {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--glass);
+  border: 1px solid var(--border);
+  color: var(--text);
+  transition: all 0.15s ease;
+}
+.btn-icon-glass:hover {
+  background: var(--glass-strong);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Monospace Upper Label (Sentence case underlying text styled uppercase) */
+.data-tag, .eyebrow-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+}
+
+/* Accessible focus ring */
+:focus-visible {
+  outline: 2px solid var(--accent) !important;
+  outline-offset: 2px !important;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Custom hairline scrollbars */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
