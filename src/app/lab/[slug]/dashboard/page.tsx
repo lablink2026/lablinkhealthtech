@@ -27,15 +27,15 @@ export default function LabDashboardPage({
   };
 
   return (
-    <div className="max-w-[1200px] mx-auto px-4 sm:px-6 pt-32 sm:pt-40 pb-24 space-y-8">
+    <div className="max-w-[1200px] mx-auto px-4 sm:px-6 pt-28 sm:pt-40 pb-24 space-y-8">
       {/* Lab Header (Glass) */}
-      <div className="rounded-[28px] glass p-6 sm:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6 shadow-xl">
+      <div className="rounded-[28px] glass p-6 sm:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6 shadow-xl border border-[var(--border)] card-hover-lift">
         <div className="flex items-center gap-4">
-          <div className="w-14 h-14 rounded-2xl glass border border-[var(--border)] text-[var(--accent)] font-mono font-bold text-xl flex items-center justify-center shadow-sm">
+          <div className="w-14 h-14 rounded-2xl glass border border-[var(--border)] text-[var(--accent)] font-mono font-bold text-xl flex items-center justify-center shadow-sm flex-shrink-0">
             SYN
           </div>
           <div className="space-y-1">
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <h1 className="text-xl sm:text-2xl font-bold text-[var(--text)]">Synlab Diagnostics VI</h1>
               <span className="data-tag text-[9px] px-2.5 py-0.5 rounded-full glass border border-[var(--accent)] text-[var(--accent)]">
                 MLSCN verified lab
@@ -50,22 +50,22 @@ export default function LabDashboardPage({
           </div>
         </div>
 
-        <div className="flex items-center gap-3 text-right">
+        <div className="flex items-center gap-3 text-left md:text-right">
           <div>
             <div className="font-bold text-[var(--text)] text-xs">Dr. Folake Adeleke</div>
             <div className="text-[11px] text-[var(--text-muted)] font-mono">Laboratory administrator</div>
           </div>
-          <div className="w-10 h-10 rounded-xl glass border border-[var(--border)] flex items-center justify-center font-mono font-bold text-[var(--accent)] text-xs">
+          <div className="w-10 h-10 rounded-xl glass border border-[var(--border)] flex items-center justify-center font-mono font-bold text-[var(--accent)] text-xs flex-shrink-0">
             FA
           </div>
         </div>
       </div>
 
-      {/* Navigation Tabs */}
-      <div className="flex gap-6 border-b border-[var(--border)] text-xs font-mono tracking-wider font-semibold">
+      {/* Navigation Tabs - Mobile scrollable */}
+      <div className="flex gap-4 sm:gap-6 border-b border-[var(--border)] text-xs font-mono tracking-wider font-semibold overflow-x-auto whitespace-nowrap pb-0.5">
         <button
           onClick={() => setActiveTab('overview')}
-          className={`pb-3 px-1 transition border-b-2 uppercase ${
+          className={`pb-3 px-1 transition border-b-2 uppercase cursor-pointer ${
             activeTab === 'overview'
               ? 'border-[var(--accent)] text-[var(--accent)] font-bold'
               : 'border-transparent text-[var(--text-muted)] hover:text-[var(--text)]'
@@ -75,7 +75,7 @@ export default function LabDashboardPage({
         </button>
         <button
           onClick={() => setActiveTab('catalog')}
-          className={`pb-3 px-1 transition border-b-2 uppercase ${
+          className={`pb-3 px-1 transition border-b-2 uppercase cursor-pointer ${
             activeTab === 'catalog'
               ? 'border-[var(--accent)] text-[var(--accent)] font-bold'
               : 'border-transparent text-[var(--text-muted)] hover:text-[var(--text)]'
@@ -85,7 +85,7 @@ export default function LabDashboardPage({
         </button>
         <button
           onClick={() => setActiveTab('bookings')}
-          className={`pb-3 px-1 transition border-b-2 uppercase ${
+          className={`pb-3 px-1 transition border-b-2 uppercase cursor-pointer ${
             activeTab === 'bookings'
               ? 'border-[var(--accent)] text-[var(--accent)] font-bold'
               : 'border-transparent text-[var(--text-muted)] hover:text-[var(--text)]'
@@ -95,7 +95,7 @@ export default function LabDashboardPage({
         </button>
         <button
           onClick={() => setActiveTab('results')}
-          className={`pb-3 px-1 transition border-b-2 uppercase ${
+          className={`pb-3 px-1 transition border-b-2 uppercase cursor-pointer ${
             activeTab === 'results'
               ? 'border-[var(--accent)] text-[var(--accent)] font-bold'
               : 'border-transparent text-[var(--text-muted)] hover:text-[var(--text)]'
@@ -105,29 +105,29 @@ export default function LabDashboardPage({
         </button>
       </div>
 
-      {/* Tab 1: Operational Telemetry (Glass KPI cards with big numerals) */}
+      {/* Tab 1: Operational Telemetry */}
       {activeTab === 'overview' && (
         <div className="space-y-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            <div className="rounded-[24px] glass p-6 space-y-2">
+            <div className="rounded-[24px] glass p-6 space-y-2 border border-[var(--border)] card-hover-lift shimmer-sheen">
               <span className="eyebrow-label text-[10px] text-[var(--text-muted)]">Today&apos;s bookings</span>
               <div className="text-3xl sm:text-4xl font-serif italic text-[var(--text)] font-normal">28 tests</div>
               <div className="text-[var(--accent)] text-xs font-mono">↑ +14% velocity</div>
             </div>
 
-            <div className="rounded-[24px] glass p-6 space-y-2">
+            <div className="rounded-[24px] glass p-6 space-y-2 border border-[var(--border)] card-hover-lift shimmer-sheen">
               <span className="eyebrow-label text-[10px] text-[var(--text-muted)]">Gross volume (MTD)</span>
               <div className="text-3xl sm:text-4xl font-serif italic text-[var(--accent)] font-normal">₦1,420,000</div>
               <div className="text-[var(--text-muted)] text-xs font-mono">Reconciled via Paystack</div>
             </div>
 
-            <div className="rounded-[24px] glass p-6 space-y-2">
+            <div className="rounded-[24px] glass p-6 space-y-2 border border-[var(--border)] card-hover-lift shimmer-sheen">
               <span className="eyebrow-label text-[10px] text-[var(--text-muted)]">Average turnaround</span>
               <div className="text-3xl sm:text-4xl font-serif italic text-[var(--text)] font-normal">2.4 hours</div>
               <div className="text-[var(--accent)] text-xs font-mono">Target &lt; 4.0h met</div>
             </div>
 
-            <div className="rounded-[24px] glass p-6 space-y-2">
+            <div className="rounded-[24px] glass p-6 space-y-2 border border-[var(--border)] card-hover-lift shimmer-sheen">
               <span className="eyebrow-label text-[10px] text-[var(--text-muted)]">Home phlebotomy</span>
               <div className="text-3xl sm:text-4xl font-serif italic text-[var(--gold)] font-normal">46%</div>
               <div className="text-[var(--text-muted)] text-xs font-mono">13 visits dispatched</div>
@@ -136,10 +136,10 @@ export default function LabDashboardPage({
         </div>
       )}
 
-      {/* Tab 2: Test Catalog (Opaque Table) */}
+      {/* Tab 2: Test Catalog (Table with responsive scroll) */}
       {activeTab === 'catalog' && (
-        <div className="rounded-[28px] glass p-6 sm:p-8 space-y-6 shadow-xl">
-          <div className="flex items-center justify-between pb-3 border-b border-[var(--border)]">
+        <div className="rounded-[28px] glass p-6 sm:p-8 space-y-6 shadow-xl border border-[var(--border)] card-hover-lift">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[var(--border)] gap-2">
             <div className="space-y-1">
               <span className="eyebrow-label text-[var(--accent)]">Statutory test menu</span>
               <h2 className="text-xl font-bold text-[var(--text)]">Active diagnostic test catalog</h2>
@@ -149,8 +149,8 @@ export default function LabDashboardPage({
             </span>
           </div>
 
-          <div className="overflow-x-auto rounded-[20px] border border-[var(--border)] bg-[var(--bg-raised)]">
-            <table className="w-full text-left text-xs border-collapse">
+          <div className="overflow-x-auto rounded-[20px] border border-[var(--border)] bg-[var(--bg-raised)] shadow-inner">
+            <table className="w-full text-left text-xs border-collapse min-w-[560px]">
               <thead>
                 <tr className="border-b border-[var(--border)] text-[var(--text-muted)] font-mono text-[11px] uppercase">
                   <th className="py-3.5 px-4 font-semibold">Code</th>
@@ -190,7 +190,7 @@ export default function LabDashboardPage({
 
       {/* Tab 3: Phlebotomy Dispatch */}
       {activeTab === 'bookings' && (
-        <div className="rounded-[28px] glass p-6 sm:p-8 space-y-6 shadow-xl">
+        <div className="rounded-[28px] glass p-6 sm:p-8 space-y-6 shadow-xl border border-[var(--border)] card-hover-lift">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[var(--border)] gap-2">
             <div className="space-y-1">
               <span className="eyebrow-label text-[var(--accent)]">Specimen chain of custody</span>
@@ -198,13 +198,13 @@ export default function LabDashboardPage({
             </div>
             <button
               onClick={() => alert('Printing specimen barcode: LL-SMP-948210')}
-              className="btn-primary-pill px-5 py-2 text-xs font-bold whitespace-nowrap self-start sm:self-auto"
+              className="btn-primary-pill px-5 py-2 text-xs font-bold whitespace-nowrap self-start sm:self-auto cursor-pointer"
             >
               Print specimen barcode
             </button>
           </div>
 
-          <div className="p-5 rounded-[20px] bg-[var(--bg-raised)] border border-[var(--border)] flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 text-xs font-mono">
+          <div className="p-5 rounded-[20px] bg-[var(--bg-raised)] border border-[var(--border)] flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 text-xs font-mono shadow-inner">
             <div className="space-y-1">
               <div className="font-bold text-[var(--accent)] flex items-center gap-2">
                 <span>LL-SMP-948210 (Olumide Adeyemi)</span>
@@ -219,9 +219,9 @@ export default function LabDashboardPage({
         </div>
       )}
 
-      {/* Tab 4: Results Workflow (Opaque Form & Anomaly Check) */}
+      {/* Tab 4: Results Workflow */}
       {activeTab === 'results' && (
-        <div className="rounded-[28px] glass p-6 sm:p-8 space-y-6 shadow-xl">
+        <div className="rounded-[28px] glass p-6 sm:p-8 space-y-6 shadow-xl border border-[var(--border)] card-hover-lift">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[var(--border)] gap-2">
             <div className="space-y-1">
               <span className="eyebrow-label text-[var(--accent)]">Licensed laboratory scientist console</span>
@@ -236,7 +236,7 @@ export default function LabDashboardPage({
             </div>
           </div>
 
-          <div className="p-6 rounded-[20px] bg-[var(--bg-raised)] border border-[var(--border)] space-y-5 font-mono text-xs">
+          <div className="p-6 rounded-[20px] bg-[var(--bg-raised)] border border-[var(--border)] space-y-5 font-mono text-xs shadow-inner">
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
               <div className="space-y-1.5">
                 <label className="data-tag text-[10px] text-[var(--text-muted)]">Parameter</label>
@@ -272,7 +272,7 @@ export default function LabDashboardPage({
 
             <button
               onClick={() => setResultSigned(true)}
-              className="w-full btn-primary-pill py-3.5 text-xs font-bold flex items-center justify-center gap-2"
+              className="w-full btn-primary-pill py-3.5 text-xs font-bold flex items-center justify-center gap-2 cursor-pointer"
             >
               {resultSigned ? (
                 <>

@@ -179,6 +179,60 @@ body {
   outline-offset: 2px !important;
 }
 
+/* 10-Year Engineer Micro-Interactions & Hover Polish */
+.card-hover-lift {
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s ease, border-color 0.28s ease;
+}
+.card-hover-lift:hover {
+  transform: translateY(-2.5px);
+  border-color: rgba(61, 190, 122, 0.25);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45), 0 0 24px rgba(61, 190, 122, 0.08);
+}
+
+.shimmer-sheen {
+  position: relative;
+  overflow: hidden;
+}
+.shimmer-sheen::after {
+  content: '';
+  position: absolute;
+  top: -60%;
+  left: -60%;
+  width: 220%;
+  height: 220%;
+  background: linear-gradient(
+    60deg,
+    transparent 35%,
+    rgba(255, 255, 255, 0.06) 50%,
+    transparent 65%
+  );
+  transform: rotate(25deg);
+  transition: transform 0.8s ease;
+  pointer-events: none;
+  opacity: 0;
+}
+.shimmer-sheen:hover::after {
+  transform: rotate(25deg) translate(25%, 25%);
+  opacity: 1;
+}
+
+/* Smooth input focus glow */
+input:focus, select:focus, textarea:focus {
+  box-shadow: 0 0 0 3px rgba(61, 190, 122, 0.15);
+}
+
+/* Mobile responsive safeguards */
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+@media (max-width: 480px) {
+  .eyebrow-label {
+    letter-spacing: 0.08em;
+  }
+}
+
 /* Respect reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {

@@ -1,15 +1,67 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { AccentHeading } from '../shared/components/AccentHeading';
 import { HeroVerificationEngine } from '../shared/components/HeroVerificationEngine';
+
+const CLINICAL_SEARCH_PROMPTS = [
+  'Annual screening for 45-year-old with family history of diabetes...',
+  'Severe fever, chills and joint pain after visiting Lekki...',
+  'Pre-marital screening: Genotype, blood group and hepatitis...',
+  'Executive cardiac and lipid profile checkup in Victoria Island...',
+  'Fasting glucose and HbA1c 3-month sugar monitoring...',
+  'Routine full blood count, PCV and malaria parasite test...'
+];
 
 export default function HomePage() {
   const [aiQuery, setAiQuery] = useState('');
   const [aiLoading, setAiLoading] = useState(false);
   const [aiResult, setAiResult] = useState<any>(null);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
+  const [isInputFocused, setIsInputFocused] = useState(false);
+
+  // Moving keyboard typewriter effect for AI Search placeholder
+  const [placeholderText, setPlaceholderText] = useState('');
+  const [promptIndex, setPromptIndex] = useState(0);
+  const [charIndex, setCharIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    // If input is focused or user has entered text, pause typewriter animation
+    if (isInputFocused || aiQuery.length > 0) return;
+
+    const currentPrompt = CLINICAL_SEARCH_PROMPTS[promptIndex];
+    let timer: NodeJS.Timeout;
+
+    if (!isDeleting) {
+      if (charIndex < currentPrompt.length) {
+        timer = setTimeout(() => {
+          setPlaceholderText(currentPrompt.slice(0, charIndex + 1));
+          setCharIndex((prev) => prev + 1);
+        }, 40); // natural keyboard stroke cadence
+      } else {
+        // Full prompt completed, linger for reading
+        timer = setTimeout(() => {
+          setIsDeleting(true);
+        }, 2400);
+      }
+    } else {
+      if (charIndex > 0) {
+        timer = setTimeout(() => {
+          setPlaceholderText(currentPrompt.slice(0, charIndex - 1));
+          setCharIndex((prev) => prev - 1);
+        }, 18); // swift backspace delete
+      } else {
+        // Finished deleting, transition to next prompt
+        setIsDeleting(false);
+        setPromptIndex((prev) => (prev + 1) % CLINICAL_SEARCH_PROMPTS.length);
+        timer = setTimeout(() => {}, 350);
+      }
+    }
+
+    return () => clearTimeout(timer);
+  }, [charIndex, isDeleting, promptIndex, isInputFocused, aiQuery]);
 
   const handleAiSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -124,26 +176,26 @@ export default function HomePage() {
   ];
 
   return (
-    <div className="space-y-28 pb-32 pt-32 sm:pt-40">
+    <div className="space-y-24 sm:space-y-32 pb-32 pt-28 sm:pt-40">
       {/* 1. Hero Section */}
       <section className="relative max-w-[1200px] mx-auto px-4 sm:px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
           {/* Left Column */}
-          <div className="lg:col-span-7 space-y-7 text-left">
+          <div className="lg:col-span-7 space-y-6 sm:space-y-7 text-left">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full glass border border-[var(--border)]">
               <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)] animate-pulse"></span>
-              <span className="eyebrow-label text-[11px] text-[var(--accent)]">
-                Accredited diagnostic infrastructure
+              <span className="eyebrow-label text-[10px] sm:text-[11px] text-[var(--accent)]">
+                Digital healthcare infrastructure
               </span>
             </div>
 
             {/* Headline with accent and gold underline */}
             <div className="space-y-2">
-              <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-[-0.04em] text-[var(--text)] leading-[1.0]">
+              <h1 className="text-3xl sm:text-5xl lg:text-7xl font-bold tracking-[-0.04em] text-[var(--text)] leading-[1.05] sm:leading-[1.0]">
                 Find Labs. Book Tests.
               </h1>
               <div className="relative inline-block">
-                <span className="font-serif italic font-normal text-4xl sm:text-6xl lg:text-7xl text-transparent bg-clip-text bg-gradient-to-r from-[var(--accent)] to-[var(--accent-deep)] leading-[1.0]">
+                <span className="font-serif italic font-normal text-3xl sm:text-5xl lg:text-7xl text-transparent bg-clip-text bg-gradient-to-r from-[var(--accent)] to-[var(--accent-deep)] leading-[1.05] sm:leading-[1.0]">
                   Trust the result.
                 </span>
                 <span className="absolute -bottom-2 left-0 right-0 w-full pointer-events-none">
@@ -167,7 +219,7 @@ export default function HomePage() {
               </div>
             </div>
 
-            <p className="text-base sm:text-lg text-[var(--text-muted)] max-w-xl leading-relaxed">
+            <p className="text-sm sm:text-base lg:text-lg text-[var(--text-muted)] max-w-xl leading-relaxed">
               Connect directly with accredited medical laboratories across Nigeria. Compare transparent test prices, dispatch certified mobile phlebotomists, and receive cryptographically signed health proof.
             </p>
 
@@ -175,7 +227,7 @@ export default function HomePage() {
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-1">
               <Link
                 href="/search"
-                className="btn-primary-pill px-7 py-3.5 text-sm sm:text-base inline-flex items-center justify-center gap-2 group"
+                className="btn-primary-pill px-7 py-3.5 text-sm sm:text-base inline-flex items-center justify-center gap-2 group cursor-pointer"
               >
                 <span>Find a lab</span>
                 <svg
@@ -191,14 +243,14 @@ export default function HomePage() {
 
               <Link
                 href="/lab/synlab-vi/dashboard"
-                className="btn-secondary-pill px-6 py-3.5 text-sm sm:text-base inline-flex items-center justify-center"
+                className="btn-secondary-pill px-6 py-3.5 text-sm sm:text-base inline-flex items-center justify-center cursor-pointer"
               >
                 I run a laboratory
               </Link>
             </div>
 
             {/* Quiet trust row in sentence case */}
-            <div className="pt-3 border-t border-[var(--border)] text-xs text-[var(--text-muted)] flex flex-wrap items-center gap-x-3 gap-y-1">
+            <div className="pt-3 border-t border-[var(--border)] text-xs text-[var(--text-muted)] flex flex-wrap items-center gap-x-3 gap-y-1.5">
               <span>Licensed labs only</span>
               <span className="text-[var(--border)]">·</span>
               <span>Transparent prices</span>
@@ -210,16 +262,19 @@ export default function HomePage() {
           </div>
 
           {/* Right Column: Lablink Bespoke Artwork */}
-          <div className="lg:col-span-5 flex justify-center">
+          <div className="lg:col-span-5 flex justify-center w-full">
             <HeroVerificationEngine />
           </div>
         </div>
       </section>
 
-      {/* 2. Assistive AI Smart Test Finder */}
+      {/* 2. Assistive AI Smart Test Finder with Moving Keyboard Placeholder */}
       <section id="test-finder" className="max-w-[1200px] mx-auto px-4 sm:px-6">
-        <div className="rounded-[24px] glass p-6 sm:p-10 space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div className="rounded-[28px] glass p-6 sm:p-10 space-y-6 shadow-xl card-hover-lift border border-[var(--border)] relative overflow-hidden">
+          {/* Ambient glow accent behind search card */}
+          <div className="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-[var(--accent)] opacity-10 blur-3xl pointer-events-none" />
+
+          <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div className="space-y-1">
               <span className="eyebrow-label text-[var(--accent)]">Assistive search</span>
               <AccentHeading
@@ -234,32 +289,91 @@ export default function HomePage() {
             </div>
 
             <div className="self-start sm:self-center">
-              <span className="data-tag text-[10px] px-3 py-1 rounded-full glass border border-[var(--border)] text-[var(--accent)]">
-                Non-diagnostic protocol
+              <span className="data-tag text-[10px] px-3 py-1 rounded-full glass border border-[var(--border)] text-[var(--accent)] flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)]"></span>
+                <span>Non-diagnostic protocol</span>
               </span>
             </div>
           </div>
 
-          <form onSubmit={handleAiSearch} className="flex flex-col sm:flex-row gap-3">
-            <input
-              type="text"
-              value={aiQuery}
-              onChange={(e) => setAiQuery(e.target.value)}
-              placeholder="e.g. Annual screening for a 45-year-old with a family history of diabetes..."
-              className="flex-1 px-5 py-3.5 rounded-full bg-[var(--bg-raised)] text-[var(--text)] placeholder-[var(--text-muted)] text-xs sm:text-sm border border-[var(--border)] focus:border-[var(--accent)] focus-visible:ring-2 focus-visible:ring-[var(--accent)] outline-none transition"
-            />
+          {/* Search Form with Animated Keyboard Typewriter Placeholder */}
+          <form onSubmit={handleAiSearch} className="relative z-10 flex flex-col sm:flex-row gap-3">
+            <div className="relative flex-1">
+              <input
+                type="text"
+                value={aiQuery}
+                onFocus={() => setIsInputFocused(true)}
+                onBlur={() => setIsInputFocused(false)}
+                onChange={(e) => setAiQuery(e.target.value)}
+                placeholder={placeholderText ? `${placeholderText} |` : 'Search symptoms, health goals, or test names...'}
+                className="w-full pl-5 pr-10 py-3.5 rounded-full bg-[var(--bg-raised)] text-[var(--text)] placeholder-[var(--text-muted)] text-xs sm:text-sm border border-[var(--border)] focus:border-[var(--accent)] outline-none transition-all shadow-inner"
+              />
+              {aiQuery && (
+                <button
+                  type="button"
+                  onClick={() => setAiQuery('')}
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs text-[var(--text-muted)] hover:text-[var(--text)] p-1 rounded-full"
+                  aria-label="Clear query"
+                >
+                  ✕
+                </button>
+              )}
+            </div>
             <button
               type="submit"
               disabled={aiLoading}
-              className="btn-primary-pill px-6 py-3.5 text-xs sm:text-sm whitespace-nowrap disabled:opacity-50"
+              className="btn-primary-pill px-7 py-3.5 text-xs sm:text-sm whitespace-nowrap disabled:opacity-50 inline-flex items-center justify-center gap-2 group cursor-pointer"
             >
-              {aiLoading ? 'Evaluating...' : 'Suggest tests'}
+              {aiLoading ? (
+                <>
+                  <svg className="animate-spin h-4 w-4 text-[#0A0F0D]" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  <span>Evaluating...</span>
+                </>
+              ) : (
+                <>
+                  <span>Suggest tests</span>
+                  <svg
+                    className="w-4 h-4 transition-transform group-hover:translate-x-0.5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth="2.2"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </>
+              )}
             </button>
           </form>
 
+          {/* Quick Interactive Prompt Chips */}
+          <div className="relative z-10 flex flex-wrap items-center gap-2 pt-1 text-xs">
+            <span className="text-[var(--text-muted)] text-[11px] font-mono">Quick suggest:</span>
+            {[
+              { label: 'Diabetes & FBS', query: 'Annual screening for 45-year-old with family history of diabetes' },
+              { label: 'Pre-marital panel', query: 'Pre-marital screening: Genotype, blood group and hepatitis' },
+              { label: 'Fever & Malaria', query: 'Severe fever, chills and joint pain after visiting Lekki' },
+              { label: 'Cardiac checkup', query: 'Executive cardiac and lipid profile checkup in Victoria Island' },
+            ].map((chip) => (
+              <button
+                key={chip.label}
+                type="button"
+                onClick={() => {
+                  setAiQuery(chip.query);
+                }}
+                className="px-3 py-1 rounded-full glass border border-[var(--border)] text-[var(--text-muted)] hover:text-[var(--accent)] hover:border-[var(--accent)] hover:bg-[var(--glass-strong)] transition-all text-[11px] font-medium cursor-pointer"
+              >
+                {chip.label}
+              </button>
+            ))}
+          </div>
+
           {/* AI Result Container */}
           {aiResult && (
-            <div className="p-6 rounded-[20px] bg-[var(--bg-raised)] border border-[var(--border)] space-y-4">
+            <div className="relative z-10 p-6 rounded-[22px] bg-[var(--bg-raised)] border border-[var(--border)] space-y-4 shadow-lg animate-in fade-in duration-200">
               {aiResult.isEmergency ? (
                 <div className="p-4 rounded-xl bg-red-500/10 border border-[var(--critical)] text-[var(--critical)] space-y-1">
                   <div className="flex items-center gap-2 font-bold text-xs">
@@ -279,7 +393,7 @@ export default function HomePage() {
                     {aiResult.recommendedTests.map((t: any) => (
                       <div
                         key={t.code}
-                        className="p-4 rounded-[16px] glass border border-[var(--border)] flex flex-col justify-between space-y-3"
+                        className="p-4 rounded-[18px] glass border border-[var(--border)] flex flex-col justify-between space-y-3 card-hover-lift"
                       >
                         <div>
                           <div className="font-bold text-[var(--text)] text-xs">{t.name}</div>
@@ -331,11 +445,11 @@ export default function HomePage() {
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {accreditedLabs.map((lab) => (
             <div
               key={lab.id}
-              className="rounded-[24px] glass p-6 flex flex-col justify-between space-y-5 shadow-lg hover:border-[var(--border)] transition-all"
+              className="rounded-[24px] glass p-6 flex flex-col justify-between space-y-5 shadow-lg border border-[var(--border)] card-hover-lift shimmer-sheen group"
             >
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
@@ -348,7 +462,9 @@ export default function HomePage() {
                 </div>
 
                 <div>
-                  <h3 className="font-bold text-[var(--text)] text-base">{lab.name}</h3>
+                  <h3 className="font-bold text-[var(--text)] text-base group-hover:text-[var(--accent)] transition-colors">
+                    {lab.name}
+                  </h3>
                   <p className="text-xs text-[var(--text-muted)] mt-0.5">{lab.area}</p>
                 </div>
 
@@ -401,8 +517,8 @@ export default function HomePage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="rounded-[24px] glass p-8 space-y-4">
-            <div className="data-tag text-2xl font-serif italic text-[var(--accent)] font-normal">
+          <div className="rounded-[24px] glass p-8 space-y-4 border border-[var(--border)] card-hover-lift shimmer-sheen group">
+            <div className="data-tag text-3xl font-serif italic text-[var(--accent)] font-normal transition-transform duration-300 group-hover:scale-110 origin-left">
               01
             </div>
             <h3 className="font-bold text-lg text-[var(--text)]">Find labs and compare</h3>
@@ -411,8 +527,8 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="rounded-[24px] glass p-8 space-y-4">
-            <div className="data-tag text-2xl font-serif italic text-[var(--accent)] font-normal">
+          <div className="rounded-[24px] glass p-8 space-y-4 border border-[var(--border)] card-hover-lift shimmer-sheen group">
+            <div className="data-tag text-3xl font-serif italic text-[var(--accent)] font-normal transition-transform duration-300 group-hover:scale-110 origin-left">
               02
             </div>
             <h3 className="font-bold text-lg text-[var(--text)]">Walk in or home phlebotomy</h3>
@@ -421,8 +537,8 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="rounded-[24px] glass p-8 space-y-4">
-            <div className="data-tag text-2xl font-serif italic text-[var(--gold)] font-normal">
+          <div className="rounded-[24px] glass p-8 space-y-4 border border-[var(--border)] card-hover-lift shimmer-sheen group">
+            <div className="data-tag text-3xl font-serif italic text-[var(--gold)] font-normal transition-transform duration-300 group-hover:scale-110 origin-left">
               03
             </div>
             <h3 className="font-bold text-lg text-[var(--text)]">Receive verified results</h3>
@@ -463,24 +579,29 @@ export default function HomePage() {
             { name: 'Lipid profile', code: 'LIPID', price: '₦6,500 - ₦8,000', turnaround: '4 hours', sample: 'Serum' },
             { name: 'Glycated hemoglobin', code: 'HBA1C', price: '₦7,000 - ₦9,500', turnaround: '4 hours', sample: 'EDTA whole blood' }
           ].map((item) => (
-            <div key={item.code} className="rounded-[24px] glass p-6 space-y-4 flex flex-col justify-between">
+            <div
+              key={item.code}
+              className="rounded-[24px] glass p-6 space-y-4 flex flex-col justify-between border border-[var(--border)] card-hover-lift shimmer-sheen group"
+            >
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <span className="data-tag text-[10px] text-[var(--accent)]">{item.code}</span>
                   <span className="data-tag text-[8px] px-1.5 py-0.2 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20">Demo</span>
                 </div>
-                <h3 className="font-bold text-[var(--text)] text-base">{item.name}</h3>
+                <h3 className="font-bold text-[var(--text)] text-base group-hover:text-[var(--accent)] transition-colors">
+                  {item.name}
+                </h3>
                 <div className="text-2xl font-serif italic text-[var(--text)]">{item.price}</div>
               </div>
 
               <div className="pt-3 border-t border-[var(--border)] text-xs text-[var(--text-muted)] font-mono space-y-1">
                 <div>Sample: <span className="text-[var(--text)]">{item.sample}</span></div>
-                <div>Turnaround: <span className="text-[var(--accent)]">{item.turnaround}</span></div>
+                <div>Turnaround: <span className="text-[var(--accent)] font-semibold">{item.turnaround}</span></div>
               </div>
 
               <Link
                 href={`/search?q=${encodeURIComponent(item.name)}`}
-                className="btn-primary-pill text-center py-2 text-xs font-semibold"
+                className="btn-primary-pill text-center py-2.5 text-xs font-semibold"
               >
                 Find labs
               </Link>
@@ -511,20 +632,20 @@ export default function HomePage() {
             return (
               <div
                 key={idx}
-                className="rounded-[20px] glass overflow-hidden transition-all"
+                className="rounded-[22px] glass overflow-hidden border border-[var(--border)] card-hover-lift transition-all"
               >
                 <button
                   onClick={() => toggleFaq(idx)}
-                  className="w-full p-5 sm:p-6 text-left flex items-center justify-between gap-4 font-semibold text-sm sm:text-base text-[var(--text)]"
+                  className="w-full p-5 sm:p-6 text-left flex items-center justify-between gap-4 font-semibold text-sm sm:text-base text-[var(--text)] cursor-pointer"
                   aria-expanded={isOpen}
                 >
                   <span>{faq.q}</span>
-                  <span className="w-7 h-7 rounded-full glass border border-[var(--border)] flex items-center justify-center text-xs text-[var(--accent)] flex-shrink-0">
+                  <span className={`w-7 h-7 rounded-full glass border border-[var(--border)] flex items-center justify-center text-xs text-[var(--accent)] flex-shrink-0 transition-transform duration-200 ${isOpen ? 'rotate-180 text-[var(--gold)]' : ''}`}>
                     {isOpen ? '−' : '+'}
                   </span>
                 </button>
                 {isOpen && (
-                  <div className="px-5 sm:px-6 pb-6 text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed border-t border-[var(--border)] pt-4">
+                  <div className="px-5 sm:px-6 pb-6 text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed border-t border-[var(--border)] pt-4 animate-in fade-in duration-200">
                     {faq.a}
                   </div>
                 )}
@@ -536,7 +657,7 @@ export default function HomePage() {
 
       {/* 7. Closing Call-To-Action Band */}
       <section className="max-w-[1200px] mx-auto px-4 sm:px-6">
-        <div className="relative rounded-[32px] glass p-10 sm:p-16 text-center space-y-6 overflow-hidden">
+        <div className="relative rounded-[32px] glass p-8 sm:p-16 text-center space-y-6 overflow-hidden card-hover-lift border border-[var(--border)]">
           {/* Radial green glow behind CTA */}
           <div className="absolute inset-0 m-auto w-96 h-96 rounded-full bg-[var(--accent)] opacity-20 blur-3xl pointer-events-none" />
 
@@ -553,10 +674,10 @@ export default function HomePage() {
               Compare accredited laboratories in your neighborhood, schedule an on-demand phlebotomist, and receive cryptographically verified reports.
             </p>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 pt-4">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3.5 pt-4">
               <Link
                 href="/search"
-                className="btn-primary-pill px-8 py-3.5 text-sm sm:text-base inline-flex items-center gap-2 group"
+                className="btn-primary-pill px-8 py-3.5 text-sm sm:text-base inline-flex items-center justify-center gap-2 group cursor-pointer"
               >
                 <span>Find a lab</span>
                 <svg
@@ -571,7 +692,7 @@ export default function HomePage() {
               </Link>
               <Link
                 href="/lab/synlab-vi/dashboard"
-                className="btn-secondary-pill px-7 py-3.5 text-sm sm:text-base inline-flex items-center"
+                className="btn-secondary-pill px-7 py-3.5 text-sm sm:text-base inline-flex items-center justify-center cursor-pointer"
               >
                 Register your lab
               </Link>

@@ -58,12 +58,27 @@ const config: Config = {
         'float-delayed': {
           '0%, 100%': { transform: 'translateY(0px)' },
           '50%': { transform: 'translateY(6px)' }
+        },
+        'pulse-glow': {
+          '0%, 100%': { opacity: '0.14', transform: 'scale(1)' },
+          '50%': { opacity: '0.24', transform: 'scale(1.06)' }
+        },
+        'shimmer': {
+          '0%': { backgroundPosition: '-200% 0' },
+          '100%': { backgroundPosition: '200% 0' }
+        },
+        'cursor-blink': {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0' }
         }
       },
       animation: {
         'scan': 'scan 3s ease-in-out infinite',
         'float-slow': 'float-slow 6s ease-in-out infinite',
-        'float-delayed': 'float-delayed 7s ease-in-out 1s infinite'
+        'float-delayed': 'float-delayed 7s ease-in-out 1s infinite',
+        'pulse-glow': 'pulse-glow 5s ease-in-out infinite',
+        'shimmer': 'shimmer 2.5s linear infinite',
+        'cursor-blink': 'cursor-blink 0.9s infinite'
       }
     }
   },

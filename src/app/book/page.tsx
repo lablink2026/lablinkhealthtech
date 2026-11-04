@@ -35,9 +35,9 @@ export default function BookingPage() {
 
   if (confirmedBooking) {
     return (
-      <div className="max-w-xl mx-auto px-4 pt-36 pb-24 space-y-6">
-        <div className="rounded-[28px] glass p-8 sm:p-10 shadow-2xl text-center space-y-6">
-          <div className="w-16 h-16 rounded-full glass border border-[var(--accent)] text-[var(--accent)] text-2xl font-black flex items-center justify-center mx-auto shadow-sm">
+      <div className="max-w-xl mx-auto px-4 pt-32 sm:pt-40 pb-24 space-y-6">
+        <div className="rounded-[28px] glass p-6 sm:p-10 shadow-2xl text-center space-y-6 border border-[var(--border)] card-hover-lift shimmer-sheen">
+          <div className="w-16 h-16 rounded-full glass border border-[var(--accent)] text-[var(--accent)] text-2xl font-black flex items-center justify-center mx-auto shadow-md">
             <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
               <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
             </svg>
@@ -55,7 +55,7 @@ export default function BookingPage() {
           </div>
 
           {/* Opaque Raised Confirmation Slip */}
-          <div className="p-6 rounded-[20px] bg-[var(--bg-raised)] border border-[var(--border)] text-left text-xs space-y-3 font-mono">
+          <div className="p-5 sm:p-6 rounded-[20px] bg-[var(--bg-raised)] border border-[var(--border)] text-left text-xs space-y-3 font-mono shadow-inner">
             <div className="flex justify-between">
               <span className="text-[var(--text-muted)]">Diagnostic facility:</span>
               <span className="font-bold text-[var(--text)]">{confirmedBooking.labName}</span>
@@ -93,7 +93,7 @@ export default function BookingPage() {
             </Link>
             <button
               onClick={() => setConfirmedBooking(null)}
-              className="flex-1 btn-secondary-pill py-3 text-xs font-semibold"
+              className="flex-1 btn-secondary-pill py-3 text-xs font-semibold cursor-pointer"
             >
               Book another test
             </button>
@@ -104,7 +104,7 @@ export default function BookingPage() {
   }
 
   return (
-    <div className="max-w-[1200px] mx-auto px-4 sm:px-6 pt-32 sm:pt-40 pb-24 space-y-10">
+    <div className="max-w-[1200px] mx-auto px-4 sm:px-6 pt-28 sm:pt-40 pb-24 space-y-10">
       <div className="text-center space-y-2 max-w-xl mx-auto">
         <span className="eyebrow-label text-[var(--accent)]">Appointment scheduling</span>
         <AccentHeading
@@ -120,20 +120,20 @@ export default function BookingPage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        {/* Left Form (8 Cols) */}
+        {/* Left Form (7 Cols) */}
         <form onSubmit={handleBooking} className="lg:col-span-7 space-y-6">
           {/* Collection Mode Tabs */}
-          <div className="p-1 rounded-full glass border border-[var(--border)] grid grid-cols-2 text-xs font-semibold">
+          <div className="p-1 rounded-full glass border border-[var(--border)] grid grid-cols-1 sm:grid-cols-2 gap-1 text-xs font-semibold">
             <button
               type="button"
               onClick={() => setCollectionType('home_collection')}
-              className={`py-3 rounded-full transition-all flex items-center justify-center gap-2 ${
+              className={`py-3 px-4 rounded-full transition-all flex items-center justify-center gap-2 cursor-pointer ${
                 collectionType === 'home_collection'
-                  ? 'bg-[var(--accent)] text-[#0A0F0D] font-bold shadow-sm'
+                  ? 'bg-[var(--accent)] text-[#0A0F0D] font-bold shadow-md'
                   : 'text-[var(--text-muted)] hover:text-[var(--text)]'
               }`}
             >
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.75">
+              <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.75">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
               </svg>
               <span>Home collection (+₦4,000)</span>
@@ -142,27 +142,27 @@ export default function BookingPage() {
             <button
               type="button"
               onClick={() => setCollectionType('walk_in')}
-              className={`py-3 rounded-full transition-all flex items-center justify-center gap-2 ${
+              className={`py-3 px-4 rounded-full transition-all flex items-center justify-center gap-2 cursor-pointer ${
                 collectionType === 'walk_in'
-                  ? 'bg-[var(--accent)] text-[#0A0F0D] font-bold shadow-sm'
+                  ? 'bg-[var(--accent)] text-[#0A0F0D] font-bold shadow-md'
                   : 'text-[var(--text-muted)] hover:text-[var(--text)]'
               }`}
             >
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.75">
+              <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.75">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
               </svg>
               <span>Walk-in visit</span>
             </button>
           </div>
 
-          <div className="rounded-[24px] glass p-6 sm:p-8 space-y-5">
+          <div className="rounded-[28px] glass p-6 sm:p-8 space-y-5 border border-[var(--border)] card-hover-lift shadow-xl">
             {/* Facility Choice */}
             <div className="space-y-1.5">
               <label className="text-xs font-semibold text-[var(--text)]">Select accredited facility</label>
               <select
                 value={selectedLab}
                 onChange={(e) => setSelectedLab(e.target.value)}
-                className="w-full px-4 py-3 rounded-full bg-[var(--bg-raised)] text-[var(--text)] text-xs sm:text-sm border border-[var(--border)] focus:border-[var(--accent)] focus-visible:ring-2 focus-visible:ring-[var(--accent)] outline-none font-medium"
+                className="w-full px-4 py-3 rounded-full bg-[var(--bg-raised)] text-[var(--text)] text-xs sm:text-sm border border-[var(--border)] focus:border-[var(--accent)] focus-visible:ring-2 focus-visible:ring-[var(--accent)] outline-none font-medium cursor-pointer"
               >
                 <option value="synlab-vi">Synlab Diagnostics VI (Victoria Island, Lagos)</option>
                 <option value="medex-yaba">Medex Diagnostic Centre Yaba (Herbert Macaulay, Lagos)</option>
@@ -174,12 +174,12 @@ export default function BookingPage() {
             {/* Test Selection */}
             <div className="space-y-1.5">
               <label className="text-xs font-semibold text-[var(--text)]">Diagnostic test</label>
-              <div className="p-3.5 rounded-xl bg-[var(--bg-raised)] border border-[var(--border)] flex items-center justify-between">
+              <div className="p-3.5 rounded-2xl bg-[var(--bg-raised)] border border-[var(--border)] flex items-center justify-between shadow-inner">
                 <div>
                   <div className="font-bold text-xs text-[var(--text)]">Fasting blood sugar (FBS)</div>
                   <div className="text-[11px] text-[var(--text-muted)] font-mono">Fluoride plasma · 8-12h overnight fast</div>
                 </div>
-                <div className="font-serif italic text-base text-[var(--text)]">₦2,200</div>
+                <div className="font-serif italic text-base text-[var(--text)] font-semibold">₦2,200</div>
               </div>
             </div>
 
@@ -191,7 +191,7 @@ export default function BookingPage() {
                   type="date"
                   value={scheduledDate}
                   onChange={(e) => setScheduledDate(e.target.value)}
-                  className="w-full px-4 py-3 rounded-full bg-[var(--bg-raised)] text-[var(--text)] text-xs sm:text-sm border border-[var(--border)] focus:border-[var(--accent)] focus-visible:ring-2 focus-visible:ring-[var(--accent)] outline-none"
+                  className="w-full px-4 py-3 rounded-full bg-[var(--bg-raised)] text-[var(--text)] text-xs sm:text-sm border border-[var(--border)] focus:border-[var(--accent)] focus-visible:ring-2 focus-visible:ring-[var(--accent)] outline-none cursor-pointer"
                 />
               </div>
               <div className="space-y-1.5">
@@ -199,7 +199,7 @@ export default function BookingPage() {
                 <select
                   value={scheduledSlot}
                   onChange={(e) => setScheduledSlot(e.target.value)}
-                  className="w-full px-4 py-3 rounded-full bg-[var(--bg-raised)] text-[var(--text)] text-xs sm:text-sm border border-[var(--border)] focus:border-[var(--accent)] focus-visible:ring-2 focus-visible:ring-[var(--accent)] outline-none font-medium"
+                  className="w-full px-4 py-3 rounded-full bg-[var(--bg-raised)] text-[var(--text)] text-xs sm:text-sm border border-[var(--border)] focus:border-[var(--accent)] focus-visible:ring-2 focus-visible:ring-[var(--accent)] outline-none font-medium cursor-pointer"
                 >
                   <option value="07:30 - 08:30 AM">07:30 - 08:30 AM (Fasting window)</option>
                   <option value="08:30 - 09:30 AM">08:30 - 09:30 AM</option>
@@ -212,14 +212,14 @@ export default function BookingPage() {
             {/* Patient Choice */}
             <div className="space-y-1.5">
               <label className="text-xs font-semibold text-[var(--text)]">Who is this test for?</label>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <button
                   type="button"
                   onClick={() => setPatientChoice('self')}
-                  className={`p-3 rounded-xl border text-left text-xs transition ${
+                  className={`p-3.5 rounded-2xl border text-left text-xs transition cursor-pointer ${
                     patientChoice === 'self'
-                      ? 'bg-[var(--bg-raised)] border-[var(--accent)] text-[var(--text)]'
-                      : 'glass border-[var(--border)] text-[var(--text-muted)]'
+                      ? 'bg-[var(--bg-raised)] border-[var(--accent)] text-[var(--text)] shadow-sm'
+                      : 'glass border-[var(--border)] text-[var(--text-muted)] hover:border-[var(--accent)]/50'
                   }`}
                 >
                   <div className="font-bold">Self (Olumide Adeyemi)</div>
@@ -228,10 +228,10 @@ export default function BookingPage() {
                 <button
                   type="button"
                   onClick={() => setPatientChoice('child')}
-                  className={`p-3 rounded-xl border text-left text-xs transition ${
+                  className={`p-3.5 rounded-2xl border text-left text-xs transition cursor-pointer ${
                     patientChoice === 'child'
-                      ? 'bg-[var(--bg-raised)] border-[var(--accent)] text-[var(--text)]'
-                      : 'glass border-[var(--border)] text-[var(--text-muted)]'
+                      ? 'bg-[var(--bg-raised)] border-[var(--accent)] text-[var(--text)] shadow-sm'
+                      : 'glass border-[var(--border)] text-[var(--text-muted)] hover:border-[var(--accent)]/50'
                   }`}
                 >
                   <div className="font-bold">Dependent (Ayomide)</div>
@@ -242,7 +242,7 @@ export default function BookingPage() {
 
             {/* Address if home collection */}
             {collectionType === 'home_collection' && (
-              <div className="space-y-1.5 pt-1">
+              <div className="space-y-1.5 pt-1 animate-in fade-in duration-150">
                 <label className="text-xs font-semibold text-[var(--text)]">Sample collection address</label>
                 <input
                   type="text"
@@ -262,10 +262,10 @@ export default function BookingPage() {
                 <button
                   type="button"
                   onClick={() => setPaymentOption('paystack')}
-                  className={`p-3.5 rounded-xl border text-left text-xs flex items-center justify-between ${
+                  className={`p-3.5 rounded-2xl border text-left text-xs flex items-center justify-between cursor-pointer transition ${
                     paymentOption === 'paystack'
-                      ? 'bg-[var(--bg-raised)] border-[var(--accent)] text-[var(--text)]'
-                      : 'glass border-[var(--border)] text-[var(--text-muted)]'
+                      ? 'bg-[var(--bg-raised)] border-[var(--accent)] text-[var(--text)] shadow-sm'
+                      : 'glass border-[var(--border)] text-[var(--text-muted)] hover:border-[var(--accent)]/50'
                   }`}
                 >
                   <div>
@@ -278,10 +278,10 @@ export default function BookingPage() {
                 <button
                   type="button"
                   onClick={() => setPaymentOption('pay_at_lab')}
-                  className={`p-3.5 rounded-xl border text-left text-xs flex items-center justify-between ${
+                  className={`p-3.5 rounded-2xl border text-left text-xs flex items-center justify-between cursor-pointer transition ${
                     paymentOption === 'pay_at_lab'
-                      ? 'bg-[var(--bg-raised)] border-[var(--accent)] text-[var(--text)]'
-                      : 'glass border-[var(--border)] text-[var(--text-muted)]'
+                      ? 'bg-[var(--bg-raised)] border-[var(--accent)] text-[var(--text)] shadow-sm'
+                      : 'glass border-[var(--border)] text-[var(--text-muted)] hover:border-[var(--accent)]/50'
                   }`}
                 >
                   <div>
@@ -295,7 +295,7 @@ export default function BookingPage() {
 
             <button
               type="submit"
-              className="w-full btn-primary-pill py-3.5 text-xs sm:text-sm font-bold flex items-center justify-center gap-2 mt-4"
+              className="w-full btn-primary-pill py-3.5 text-xs sm:text-sm font-bold flex items-center justify-center gap-2 mt-4 cursor-pointer"
             >
               <span>Confirm and reserve appointment</span>
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
@@ -307,13 +307,13 @@ export default function BookingPage() {
 
         {/* Right Summary Card (5 Cols) */}
         <div className="lg:col-span-5 space-y-6">
-          <div className="rounded-[24px] glass p-6 sm:p-8 space-y-6 shadow-xl">
+          <div className="rounded-[28px] glass p-6 sm:p-8 space-y-6 shadow-xl border border-[var(--border)] card-hover-lift">
             <div className="space-y-1">
               <span className="eyebrow-label text-[var(--accent)]">Order summary</span>
               <h2 className="text-xl font-bold text-[var(--text)]">Transparent fee breakdown</h2>
             </div>
 
-            <div className="p-4 rounded-[16px] bg-[var(--bg-raised)] border border-[var(--border)] space-y-3 font-mono text-xs">
+            <div className="p-4 sm:p-5 rounded-[20px] bg-[var(--bg-raised)] border border-[var(--border)] space-y-3 font-mono text-xs shadow-inner">
               <div className="flex justify-between">
                 <span className="text-[var(--text-muted)]">Fasting blood sugar (FBS)</span>
                 <span className="font-bold text-[var(--text)]">₦2,200</span>

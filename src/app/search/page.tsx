@@ -81,9 +81,9 @@ export default function SearchPage() {
   });
 
   return (
-    <div className="max-w-[1200px] mx-auto px-4 sm:px-6 pt-32 sm:pt-40 pb-24 space-y-8">
+    <div className="max-w-[1200px] mx-auto px-4 sm:px-6 pt-28 sm:pt-40 pb-24 space-y-8">
       {/* Header & Filter Controls Island */}
-      <div className="rounded-[24px] glass p-6 sm:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6 shadow-xl">
+      <div className="rounded-[28px] glass p-6 sm:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6 shadow-xl border border-[var(--border)] card-hover-lift relative overflow-hidden">
         <div className="space-y-1">
           <span className="eyebrow-label text-[var(--accent)]">Diagnostic search matrix</span>
           <AccentHeading
@@ -97,12 +97,12 @@ export default function SearchPage() {
           </p>
         </div>
 
-        {/* Filter Controls */}
-        <div className="flex flex-wrap items-center gap-3">
+        {/* Filter Controls (Fully Responsive across 320px - 1024px) */}
+        <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
           <select
             value={selectedState}
             onChange={(e) => setSelectedState(e.target.value)}
-            className="px-4 py-2.5 text-xs font-semibold rounded-full bg-[var(--bg-raised)] border border-[var(--border)] text-[var(--text)] outline-none focus:border-[var(--accent)] focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
+            className="flex-1 sm:flex-initial px-4 py-2.5 text-xs font-semibold rounded-full bg-[var(--bg-raised)] border border-[var(--border)] text-[var(--text)] outline-none focus:border-[var(--accent)] focus-visible:ring-2 focus-visible:ring-[var(--accent)] cursor-pointer"
           >
             <option value="All">All regions</option>
             <option value="Lagos">Lagos</option>
@@ -112,7 +112,7 @@ export default function SearchPage() {
           <select
             value={selectedLga}
             onChange={(e) => setSelectedLga(e.target.value)}
-            className="px-4 py-2.5 text-xs font-semibold rounded-full bg-[var(--bg-raised)] border border-[var(--border)] text-[var(--text)] outline-none focus:border-[var(--accent)] focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
+            className="flex-1 sm:flex-initial px-4 py-2.5 text-xs font-semibold rounded-full bg-[var(--bg-raised)] border border-[var(--border)] text-[var(--text)] outline-none focus:border-[var(--accent)] focus-visible:ring-2 focus-visible:ring-[var(--accent)] cursor-pointer"
           >
             <option value="All">All districts</option>
             <option value="Eti-Osa">Eti-Osa (VI/Lekki)</option>
@@ -121,19 +121,19 @@ export default function SearchPage() {
             <option value="Abuja Municipal">Abuja Municipal (Garki)</option>
           </select>
 
-          <label className="flex items-center gap-2 cursor-pointer text-xs font-semibold text-[var(--text)] bg-[var(--bg-raised)] px-4 py-2.5 rounded-full border border-[var(--border)]">
+          <label className="flex items-center gap-2 cursor-pointer text-xs font-semibold text-[var(--text)] bg-[var(--bg-raised)] px-4 py-2.5 rounded-full border border-[var(--border)] select-none">
             <input
               type="checkbox"
               checked={homeOnly}
               onChange={(e) => setHomeOnly(e.target.checked)}
-              className="accent-[var(--accent)] rounded"
+              className="accent-[var(--accent)] rounded cursor-pointer"
             />
             <span>Home collection only</span>
           </label>
 
           <button
             onClick={() => setCompareModalOpen(true)}
-            className="btn-primary-pill px-5 py-2.5 text-xs font-bold whitespace-nowrap"
+            className="w-full sm:w-auto btn-primary-pill px-5 py-2.5 text-xs font-bold whitespace-nowrap cursor-pointer text-center"
           >
             Compare side-by-side (3)
           </button>
@@ -145,12 +145,14 @@ export default function SearchPage() {
         {filteredResults.map((item) => (
           <div
             key={item.labId}
-            className="rounded-[24px] glass p-6 sm:p-7 flex flex-col justify-between space-y-5 shadow-lg hover:border-[var(--border)] transition-all"
+            className="rounded-[24px] glass p-6 sm:p-7 flex flex-col justify-between space-y-5 shadow-lg border border-[var(--border)] card-hover-lift shimmer-sheen group"
           >
             <div className="flex items-start justify-between gap-3">
               <div className="space-y-1">
-                <div className="flex items-center gap-2">
-                  <h3 className="font-bold text-base sm:text-lg text-[var(--text)]">{item.labName}</h3>
+                <div className="flex flex-wrap items-center gap-2">
+                  <h3 className="font-bold text-base sm:text-lg text-[var(--text)] group-hover:text-[var(--accent)] transition-colors">
+                    {item.labName}
+                  </h3>
                   <span className="data-tag text-[9px] px-2 py-0.5 rounded-full glass border border-[var(--accent)] text-[var(--accent)]">
                     Accredited
                   </span>
@@ -170,7 +172,7 @@ export default function SearchPage() {
             </div>
 
             {/* Opaque Raised Details Surface */}
-            <div className="p-4 rounded-[16px] bg-[var(--bg-raised)] border border-[var(--border)] text-xs space-y-2">
+            <div className="p-4 rounded-[18px] bg-[var(--bg-raised)] border border-[var(--border)] text-xs space-y-2 shadow-inner">
               <div className="flex justify-between">
                 <span className="text-[var(--text-muted)]">Test ordered:</span>
                 <span className="font-semibold text-[var(--text)]">{item.testName}</span>
@@ -191,7 +193,7 @@ export default function SearchPage() {
               </div>
             </div>
 
-            <div className="flex gap-3 pt-1">
+            <div className="flex flex-col sm:flex-row gap-2.5 pt-1">
               <Link
                 href={`/book?lab=${item.labId}&collection=walk_in`}
                 className="flex-1 py-2.5 rounded-full btn-secondary-pill text-center text-xs font-bold"
@@ -211,8 +213,8 @@ export default function SearchPage() {
 
       {/* Comparison Modal */}
       {compareModalOpen && (
-        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="w-full max-w-3xl rounded-[24px] glass-strong p-6 sm:p-8 border border-[var(--border)] shadow-2xl space-y-6">
+        <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 animate-in fade-in duration-200">
+          <div className="w-full max-w-3xl rounded-[28px] glass-strong p-6 sm:p-8 border border-[var(--border)] shadow-2xl space-y-6 animate-in zoom-in-95 duration-150">
             <div className="flex justify-between items-start">
               <div className="space-y-1">
                 <span className="eyebrow-label text-[var(--accent)]">Direct comparison</span>
@@ -223,15 +225,15 @@ export default function SearchPage() {
               </div>
               <button
                 onClick={() => setCompareModalOpen(false)}
-                className="btn-icon-glass text-xs"
+                className="btn-icon-glass text-xs cursor-pointer"
                 aria-label="Close modal"
               >
                 ✕
               </button>
             </div>
 
-            <div className="overflow-x-auto rounded-[16px] border border-[var(--border)] bg-[var(--bg-raised)]">
-              <table className="w-full text-left text-xs border-collapse">
+            <div className="overflow-x-auto rounded-[18px] border border-[var(--border)] bg-[var(--bg-raised)] shadow-inner">
+              <table className="w-full text-left text-xs border-collapse min-w-[500px]">
                 <thead>
                   <tr className="border-b border-[var(--border)] text-[var(--text-muted)]">
                     <th className="py-3 px-4 font-semibold">Metric</th>
@@ -242,25 +244,25 @@ export default function SearchPage() {
                 </thead>
                 <tbody className="divide-y divide-[var(--border)] font-mono text-[11px]">
                   <tr>
-                    <td className="py-3 px-4 text-[var(--text-muted)]">Test fee</td>
+                    <td className="py-3 px-4 text-[var(--text-muted)] font-sans">Test fee</td>
                     <td className="py-3 px-4 font-bold text-[var(--text)]">₦2,200</td>
                     <td className="py-3 px-4 font-bold text-[var(--accent)]">₦1,900 (Lowest)</td>
                     <td className="py-3 px-4 font-bold text-[var(--text)]">₦2,000</td>
                   </tr>
                   <tr>
-                    <td className="py-3 px-4 text-[var(--text-muted)]">Turnaround</td>
+                    <td className="py-3 px-4 text-[var(--text-muted)] font-sans">Turnaround</td>
                     <td className="py-3 px-4 text-[var(--accent)] font-bold">2 hours (Fastest)</td>
                     <td className="py-3 px-4 text-[var(--accent)] font-bold">2 hours</td>
                     <td className="py-3 px-4 text-[var(--text-muted)]">3 hours</td>
                   </tr>
                   <tr>
-                    <td className="py-3 px-4 text-[var(--text-muted)]">Home phlebotomy fee</td>
+                    <td className="py-3 px-4 text-[var(--text-muted)] font-sans">Home phlebotomy fee</td>
                     <td className="py-3 px-4 text-[var(--text)]">₦4,000</td>
                     <td className="py-3 px-4 font-bold text-[var(--accent)]">₦3,000</td>
                     <td className="py-3 px-4 text-[var(--text)]">₦3,500</td>
                   </tr>
                   <tr>
-                    <td className="py-3 px-4 text-[var(--text-muted)]">Total for home visit</td>
+                    <td className="py-3 px-4 text-[var(--text-muted)] font-sans">Total for home visit</td>
                     <td className="py-3 px-4 font-bold text-[var(--text)]">₦6,200</td>
                     <td className="py-3 px-4 font-bold text-[var(--accent)]">₦4,900</td>
                     <td className="py-3 px-4 font-bold text-[var(--text)]">₦5,500</td>
@@ -272,7 +274,7 @@ export default function SearchPage() {
             <div className="flex justify-end pt-2">
               <button
                 onClick={() => setCompareModalOpen(false)}
-                className="btn-primary-pill px-6 py-2.5 text-xs font-bold"
+                className="btn-primary-pill px-6 py-2.5 text-xs font-bold cursor-pointer"
               >
                 Close comparison
               </button>

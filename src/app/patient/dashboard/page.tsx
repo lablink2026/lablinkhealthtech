@@ -29,15 +29,15 @@ export default function PatientDashboardPage() {
   };
 
   return (
-    <div className="max-w-[1200px] mx-auto px-4 sm:px-6 pt-32 sm:pt-40 pb-24 space-y-8">
+    <div className="max-w-[1200px] mx-auto px-4 sm:px-6 pt-28 sm:pt-40 pb-24 space-y-8">
       {/* Patient Profile Card (Outer Glass) */}
-      <div className="rounded-[28px] glass p-6 sm:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6 shadow-xl">
+      <div className="rounded-[28px] glass p-6 sm:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6 shadow-xl border border-[var(--border)] card-hover-lift">
         <div className="flex items-center gap-4">
-          <div className="w-14 h-14 rounded-2xl glass border border-[var(--border)] text-[var(--accent)] font-mono font-bold text-xl flex items-center justify-center shadow-sm">
+          <div className="w-14 h-14 rounded-2xl glass border border-[var(--border)] text-[var(--accent)] font-mono font-bold text-xl flex items-center justify-center shadow-sm flex-shrink-0">
             OA
           </div>
           <div className="space-y-1">
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <h1 className="text-xl sm:text-2xl font-bold text-[var(--text)]">Olumide Adeyemi</h1>
               <span className="data-tag text-[9px] px-2.5 py-0.5 rounded-full glass border border-[var(--accent)] text-[var(--accent)]">
                 NDPA verified patient
@@ -65,11 +65,11 @@ export default function PatientDashboardPage() {
         </div>
       </div>
 
-      {/* Tabs */}
-      <div className="flex gap-6 border-b border-[var(--border)] text-xs font-mono tracking-wider font-semibold">
+      {/* Tabs - Mobile scrollable */}
+      <div className="flex gap-4 sm:gap-6 border-b border-[var(--border)] text-xs font-mono tracking-wider font-semibold overflow-x-auto whitespace-nowrap pb-0.5">
         <button
           onClick={() => setActiveTab('trends')}
-          className={`pb-3 px-1 transition border-b-2 uppercase ${
+          className={`pb-3 px-1 transition border-b-2 uppercase cursor-pointer ${
             activeTab === 'trends'
               ? 'border-[var(--accent)] text-[var(--accent)] font-bold'
               : 'border-transparent text-[var(--text-muted)] hover:text-[var(--text)]'
@@ -79,7 +79,7 @@ export default function PatientDashboardPage() {
         </button>
         <button
           onClick={() => setActiveTab('results')}
-          className={`pb-3 px-1 transition border-b-2 uppercase ${
+          className={`pb-3 px-1 transition border-b-2 uppercase cursor-pointer ${
             activeTab === 'results'
               ? 'border-[var(--accent)] text-[var(--accent)] font-bold'
               : 'border-transparent text-[var(--text-muted)] hover:text-[var(--text)]'
@@ -89,7 +89,7 @@ export default function PatientDashboardPage() {
         </button>
         <button
           onClick={() => setActiveTab('bookings')}
-          className={`pb-3 px-1 transition border-b-2 uppercase ${
+          className={`pb-3 px-1 transition border-b-2 uppercase cursor-pointer ${
             activeTab === 'bookings'
               ? 'border-[var(--accent)] text-[var(--accent)] font-bold'
               : 'border-transparent text-[var(--text-muted)] hover:text-[var(--text)]'
@@ -102,7 +102,7 @@ export default function PatientDashboardPage() {
       {/* Tab 1: Biomarker Trend Chart */}
       {activeTab === 'trends' && (
         <div className="space-y-6">
-          <div className="rounded-[28px] glass p-6 sm:p-8 space-y-6 shadow-xl">
+          <div className="rounded-[28px] glass p-6 sm:p-8 space-y-6 shadow-xl border border-[var(--border)] card-hover-lift">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
                 <span className="eyebrow-label text-[var(--accent)]">Historical tracking</span>
@@ -113,14 +113,14 @@ export default function PatientDashboardPage() {
                   tag="h2"
                 />
               </div>
-              <span className="data-tag text-xs px-3 py-1.5 rounded-full glass border border-[var(--accent)] text-[var(--accent)]">
+              <span className="data-tag text-xs px-3 py-1.5 rounded-full glass border border-[var(--accent)] text-[var(--accent)] self-start sm:self-auto">
                 Current: 92 mg/dL (Normal)
               </span>
             </div>
 
-            {/* Opaque Raised Visual Bar Chart Container for clinical clarity */}
-            <div className="bg-[var(--bg-raised)] rounded-[20px] p-6 sm:p-8 border border-[var(--border)] space-y-6 shadow-sm">
-              <div className="h-48 flex items-end justify-between gap-6 pt-8 px-4 sm:px-16 border-b border-[var(--border)] relative">
+            {/* Opaque Raised Visual Bar Chart Container */}
+            <div className="bg-[var(--bg-raised)] rounded-[22px] p-6 sm:p-8 border border-[var(--border)] space-y-6 shadow-inner">
+              <div className="h-52 flex items-end justify-between gap-4 sm:gap-6 pt-8 px-2 sm:px-16 border-b border-[var(--border)] relative overflow-hidden">
                 {/* Reference line */}
                 <div className="absolute left-0 right-0 bottom-14 border-t border-dashed border-[var(--accent)]/40 pointer-events-none">
                   <span className="absolute right-2 -top-4 data-tag text-[9px] text-[var(--accent)] bg-[var(--bg-raised)] px-2 py-0.5 rounded border border-[var(--accent)]/30">
@@ -132,9 +132,9 @@ export default function PatientDashboardPage() {
                   const heightPercent = Math.min(100, Math.max(25, (point.value / 140) * 100));
                   const isNormal = point.flag === 'normal';
                   return (
-                    <div key={idx} className="flex-1 flex flex-col items-center gap-2 max-w-[120px]">
+                    <div key={idx} className="flex-1 flex flex-col items-center gap-2 max-w-[120px] group">
                       <span
-                        className={`text-xs font-mono font-bold px-2 py-0.5 rounded-full ${
+                        className={`text-[11px] sm:text-xs font-mono font-bold px-2 py-0.5 rounded-full transition-transform duration-200 group-hover:-translate-y-0.5 ${
                           isNormal
                             ? 'bg-[var(--accent)]/15 text-[var(--accent)] border border-[var(--accent)]/30'
                             : 'bg-amber-500/15 text-[var(--attention)] border border-[var(--attention)]/30'
@@ -144,13 +144,13 @@ export default function PatientDashboardPage() {
                       </span>
                       <div
                         style={{ height: `${heightPercent}%` }}
-                        className={`w-full max-w-[44px] rounded-t-xl transition-all ${
+                        className={`w-full max-w-[44px] rounded-t-xl transition-all duration-500 ease-out group-hover:brightness-110 ${
                           isNormal
                             ? 'bg-gradient-to-t from-[var(--accent-deep)] to-[var(--accent)] shadow-md shadow-[var(--accent-glow)]'
                             : 'bg-gradient-to-t from-amber-600 to-amber-400 shadow-md'
                         }`}
                       />
-                      <span className="text-[11px] font-mono text-[var(--text-muted)] text-center">
+                      <span className="text-[10px] sm:text-[11px] font-mono text-[var(--text-muted)] text-center">
                         {point.date}
                       </span>
                     </div>
@@ -169,7 +169,7 @@ export default function PatientDashboardPage() {
             </div>
 
             {/* Opaque Raised AI Explainer Callout */}
-            <div className="p-5 rounded-[20px] bg-[var(--bg-raised)] border border-[var(--border)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="p-5 rounded-[22px] bg-[var(--bg-raised)] border border-[var(--border)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm">
               <div className="space-y-1 text-xs">
                 <div className="font-bold text-[var(--text)]">Clinical continuity summary</div>
                 <p className="text-[var(--text-muted)]">
@@ -178,7 +178,7 @@ export default function PatientDashboardPage() {
               </div>
               <button
                 onClick={() => handleExplainResult('Fasting blood sugar', '92 mg/dL', '70 - 99 mg/dL')}
-                className="btn-primary-pill px-5 py-2 text-xs font-bold whitespace-nowrap"
+                className="btn-primary-pill px-5 py-2.5 text-xs font-bold whitespace-nowrap cursor-pointer"
               >
                 Explain with AI assistant →
               </button>
@@ -189,7 +189,7 @@ export default function PatientDashboardPage() {
 
       {/* Tab 2: Signed Results */}
       {activeTab === 'results' && (
-        <div className="rounded-[28px] glass p-6 sm:p-8 space-y-6 shadow-xl">
+        <div className="rounded-[28px] glass p-6 sm:p-8 space-y-6 shadow-xl border border-[var(--border)] card-hover-lift">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-[var(--border)] gap-2">
             <div>
               <span className="eyebrow-label text-[var(--accent)]">Cryptographic records</span>
@@ -200,9 +200,9 @@ export default function PatientDashboardPage() {
             </span>
           </div>
 
-          {/* Opaque Table for clinical data clarity */}
-          <div className="overflow-x-auto rounded-[20px] border border-[var(--border)] bg-[var(--bg-raised)]">
-            <table className="w-full text-xs text-left border-collapse">
+          {/* Table Container with Horizontal Scroll on Mobile */}
+          <div className="overflow-x-auto rounded-[20px] border border-[var(--border)] bg-[var(--bg-raised)] shadow-inner">
+            <table className="w-full text-xs text-left border-collapse min-w-[640px]">
               <thead>
                 <tr className="border-b border-[var(--border)] text-[var(--text-muted)] font-mono text-[11px] uppercase">
                   <th className="py-3.5 px-4 font-semibold">Test name</th>
@@ -257,7 +257,7 @@ export default function PatientDashboardPage() {
                     <td className="py-4 px-4 text-right space-x-2">
                       <button
                         onClick={() => handleExplainResult(row.test, row.value, '70 - 99 mg/dL')}
-                        className="btn-secondary-pill px-3 py-1 text-xs"
+                        className="btn-secondary-pill px-3 py-1 text-xs cursor-pointer"
                       >
                         AI explainer
                       </button>
@@ -278,7 +278,7 @@ export default function PatientDashboardPage() {
 
       {/* Tab 3: Active Bookings */}
       {activeTab === 'bookings' && (
-        <div className="rounded-[28px] glass p-6 sm:p-8 space-y-6 shadow-xl">
+        <div className="rounded-[28px] glass p-6 sm:p-8 space-y-6 shadow-xl border border-[var(--border)] card-hover-lift">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-[var(--border)] gap-2">
             <div>
               <span className="eyebrow-label text-[var(--accent)]">Active dispatch</span>
@@ -290,7 +290,7 @@ export default function PatientDashboardPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs">
-            <div className="space-y-3 p-6 rounded-[20px] bg-[var(--bg-raised)] border border-[var(--border)]">
+            <div className="space-y-3 p-6 rounded-[20px] bg-[var(--bg-raised)] border border-[var(--border)] shadow-inner">
               <div className="font-bold text-[var(--text)] text-sm">Appointment logistics</div>
               <div><strong className="text-[var(--text-muted)]">Laboratory:</strong> Synlab Diagnostics VI</div>
               <div><strong className="text-[var(--text-muted)]">Collection:</strong> Home visit (Lekki Phase 1)</div>
@@ -299,7 +299,7 @@ export default function PatientDashboardPage() {
               <div><strong className="text-[var(--text-muted)]">Settlement:</strong> ₦6,200 (Paid via Paystack)</div>
             </div>
 
-            <div className="space-y-3 p-6 rounded-[20px] bg-[var(--bg-raised)] border border-[var(--border)]">
+            <div className="space-y-3 p-6 rounded-[20px] bg-[var(--bg-raised)] border border-[var(--border)] shadow-inner">
               <div className="font-bold text-[var(--text)] text-sm">Preparation protocols</div>
               <ul className="list-disc list-inside space-y-1.5 text-[var(--text-muted)]">
                 <li>Strict 10-hour overnight fast for fasting blood sugar.</li>
@@ -313,8 +313,8 @@ export default function PatientDashboardPage() {
 
       {/* AI Explainer Modal */}
       {explainingResult && (
-        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="glass-strong rounded-[24px] max-w-lg w-full p-6 sm:p-8 space-y-5 border border-[var(--border)] shadow-2xl">
+        <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in duration-200">
+          <div className="glass-strong rounded-[28px] max-w-lg w-full p-6 sm:p-8 space-y-5 border border-[var(--border)] shadow-2xl animate-in zoom-in-95 duration-150">
             <div className="flex items-center justify-between pb-3 border-b border-[var(--border)]">
               <div className="flex items-center gap-2">
                 <span className="data-tag text-[10px] px-2 py-0.5 rounded-full bg-[var(--accent)]/15 text-[var(--accent)] border border-[var(--accent)]/30">
@@ -324,14 +324,14 @@ export default function PatientDashboardPage() {
               </div>
               <button
                 onClick={() => setExplainingResult(null)}
-                className="btn-icon-glass text-xs"
+                className="btn-icon-glass text-xs cursor-pointer"
                 aria-label="Close explainer"
               >
                 ✕
               </button>
             </div>
 
-            <div className="p-4 rounded-[16px] bg-[var(--bg-raised)] border border-[var(--border)] text-xs flex justify-between font-mono">
+            <div className="p-4 rounded-[16px] bg-[var(--bg-raised)] border border-[var(--border)] text-xs flex justify-between font-mono shadow-inner">
               <span>Value: <strong className="text-[var(--accent)]">{explainingResult.value}</strong></span>
               <span>Interval: <strong className="text-[var(--text-muted)]">{explainingResult.range}</strong></span>
             </div>
@@ -353,7 +353,7 @@ export default function PatientDashboardPage() {
 
             <button
               onClick={() => setExplainingResult(null)}
-              className="w-full btn-secondary-pill py-3 text-xs font-bold"
+              className="w-full btn-secondary-pill py-3 text-xs font-bold cursor-pointer"
             >
               Close
             </button>

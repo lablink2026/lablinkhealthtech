@@ -27,8 +27,8 @@ export function Navbar() {
   }, []);
 
   return (
-    <header className="fixed top-5 left-0 right-0 z-50 px-4 sm:px-6">
-      <div className="max-w-[1200px] mx-auto h-[74px] rounded-[24px] glass px-5 sm:px-6 flex items-center justify-between transition-all">
+    <header className="fixed top-3 sm:top-5 left-0 right-0 z-50 px-3 sm:px-6">
+      <div className="max-w-[1200px] mx-auto h-[68px] sm:h-[74px] rounded-[22px] sm:rounded-[24px] glass px-4 sm:px-6 flex items-center justify-between transition-all shadow-xl">
         {/* Left: Lablink Logo */}
         <Logo />
 
@@ -212,7 +212,7 @@ export function Navbar() {
 
       {/* Mobile Glass Sheet Navigation */}
       {mobileMenuOpen && (
-        <div className="lg:hidden mt-3 max-w-[1200px] mx-auto rounded-[24px] glass-strong p-6 border border-[var(--border)] shadow-2xl space-y-4">
+        <div className="lg:hidden mt-2.5 max-w-[1200px] mx-auto rounded-[22px] sm:rounded-[24px] glass-strong p-5 sm:p-6 border border-[var(--border)] shadow-2xl space-y-4 animate-in fade-in slide-in-from-top-2 duration-200 backdrop-blur-2xl">
           <div className="space-y-2 text-sm font-medium">
             <Link
               href="/search"
