@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import Link from 'next/link';
 import { AccentHeading } from '../../../../shared/components/AccentHeading';
 
 export default function LabDashboardPage({
@@ -13,6 +12,15 @@ export default function LabDashboardPage({
   const [resultSigned, setResultSigned] = useState(false);
   const [paramGlucose, setParamGlucose] = useState('92');
   const [anomalyWarning, setAnomalyWarning] = useState<string | null>(null);
+
+  const labNames: Record<string, string> = {
+    'apex-vi': 'Apex Clinical Diagnostics VI',
+    'metro-yaba': 'Metro Diagnostic Centre Yaba',
+    'echo-ikeja': 'Echo Health Diagnostics Ikeja',
+    'fcd-garki': 'Federal Capital Diagnostics Garki'
+  };
+
+  const labName = labNames[params.slug] || 'Apex Clinical Diagnostics VI';
 
   const handleGlucoseChange = (val: string) => {
     setParamGlucose(val);
@@ -32,16 +40,13 @@ export default function LabDashboardPage({
       <div className="rounded-[28px] glass p-6 sm:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6 shadow-xl border border-[var(--border)] card-hover-lift">
         <div className="flex items-center gap-4">
           <div className="w-14 h-14 rounded-2xl glass border border-[var(--border)] text-[var(--accent)] font-mono font-bold text-xl flex items-center justify-center shadow-sm flex-shrink-0">
-            SYN
+            {labName.substring(0, 3).toUpperCase()}
           </div>
           <div className="space-y-1">
             <div className="flex flex-wrap items-center gap-2">
-              <h1 className="text-xl sm:text-2xl font-bold text-[var(--text)]">Synlab Diagnostics VI</h1>
-              <span className="data-tag text-[9px] px-2.5 py-0.5 rounded-full glass border border-[var(--accent)] text-[var(--accent)]">
-                MLSCN verified lab
-              </span>
-              <span className="data-tag text-[8px] px-1.5 py-0.2 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20">
-                Demo
+              <h1 className="text-xl sm:text-2xl font-bold text-[var(--text)]">{labName}</h1>
+              <span className="data-tag text-[9px] px-2.5 py-0.5 rounded-full glass border border-[var(--accent)] text-[var(--accent)] font-sans">
+                MLSCN licensed facility
               </span>
             </div>
             <p className="text-xs text-[var(--text-muted)] font-mono">
@@ -71,7 +76,7 @@ export default function LabDashboardPage({
               : 'border-transparent text-[var(--text-muted)] hover:text-[var(--text)]'
           }`}
         >
-          Operational telemetry
+          Operational overview
         </button>
         <button
           onClick={() => setActiveTab('catalog')}
@@ -105,14 +110,14 @@ export default function LabDashboardPage({
         </button>
       </div>
 
-      {/* Tab 1: Operational Telemetry */}
+      {/* Tab 1: Operational Overview */}
       {activeTab === 'overview' && (
         <div className="space-y-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             <div className="rounded-[24px] glass p-6 space-y-2 border border-[var(--border)] card-hover-lift shimmer-sheen">
               <span className="eyebrow-label text-[10px] text-[var(--text-muted)]">Today&apos;s bookings</span>
               <div className="text-3xl sm:text-4xl font-serif italic text-[var(--text)] font-normal">28 tests</div>
-              <div className="text-[var(--accent)] text-xs font-mono">↑ +14% velocity</div>
+              <div className="text-[var(--accent)] text-xs font-mono">↑ +14% this week</div>
             </div>
 
             <div className="rounded-[24px] glass p-6 space-y-2 border border-[var(--border)] card-hover-lift shimmer-sheen">
@@ -136,16 +141,16 @@ export default function LabDashboardPage({
         </div>
       )}
 
-      {/* Tab 2: Test Catalog (Table with responsive scroll) */}
+      {/* Tab 2: Test Catalog */}
       {activeTab === 'catalog' && (
         <div className="rounded-[28px] glass p-6 sm:p-8 space-y-6 shadow-xl border border-[var(--border)] card-hover-lift">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[var(--border)] gap-2">
             <div className="space-y-1">
-              <span className="eyebrow-label text-[var(--accent)]">Statutory test menu</span>
+              <span className="eyebrow-label text-[var(--accent)]">Diagnostic test menu</span>
               <h2 className="text-xl font-bold text-[var(--text)]">Active diagnostic test catalog</h2>
             </div>
             <span className="data-tag text-xs font-mono text-[var(--accent)]">
-              40 Nigerian tests active
+              40 diagnostic tests active
             </span>
           </div>
 
@@ -193,8 +198,8 @@ export default function LabDashboardPage({
         <div className="rounded-[28px] glass p-6 sm:p-8 space-y-6 shadow-xl border border-[var(--border)] card-hover-lift">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[var(--border)] gap-2">
             <div className="space-y-1">
-              <span className="eyebrow-label text-[var(--accent)]">Specimen chain of custody</span>
-              <h2 className="text-xl font-bold text-[var(--text)]">Phlebotomy chain and barcode management</h2>
+              <span className="eyebrow-label text-[var(--accent)]">Specimen collection queue</span>
+              <h2 className="text-xl font-bold text-[var(--text)]">Phlebotomy dispatch and barcode tracking</h2>
             </div>
             <button
               onClick={() => alert('Printing specimen barcode: LL-SMP-948210')}
@@ -208,7 +213,6 @@ export default function LabDashboardPage({
             <div className="space-y-1">
               <div className="font-bold text-[var(--accent)] flex items-center gap-2">
                 <span>LL-SMP-948210 (Olumide Adeyemi)</span>
-                <span className="data-tag text-[8px] px-1.5 py-0.2 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20">Demo</span>
               </div>
               <div className="text-[var(--text-muted)]">14 Admiralty Way, Lekki · Fasting blood sugar</div>
             </div>
@@ -227,7 +231,7 @@ export default function LabDashboardPage({
               <span className="eyebrow-label text-[var(--accent)]">Licensed laboratory scientist console</span>
               <h2 className="text-xl font-bold text-[var(--text)]">Scientist entry and approver sign-off</h2>
               <p className="text-xs text-[var(--text-muted)] font-mono">
-                Cryptographic Ed25519 digital signature generation and verification token publishing
+                Electronic scientist sign-off and tamper-evident QR verification seal generation
               </p>
             </div>
             <div className="text-left sm:text-right text-xs font-mono">
@@ -279,11 +283,11 @@ export default function LabDashboardPage({
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                   </svg>
-                  <span>Signed and cryptographically hashed</span>
+                  <span>Signed and verified authentic</span>
                 </>
               ) : (
                 <>
-                  <span>Apply Ed25519 digital signature and publish</span>
+                  <span>Sign report and publish QR verification seal</span>
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                   </svg>

@@ -9,9 +9,9 @@ export default function PatientDashboardPage() {
   const [explainingResult, setExplainingResult] = useState<any>(null);
 
   const glucoseTrends = [
-    { date: '10 May 2026', value: 118, flag: 'abnormal', lab: 'Synlab VI' },
-    { date: '15 Aug 2026', value: 104, flag: 'abnormal', lab: 'Synlab VI' },
-    { date: '20 Oct 2026', value: 92,  flag: 'normal',   lab: 'Synlab VI' }
+    { date: '10 May 2026', value: 118, flag: 'abnormal', lab: 'Apex Clinical VI' },
+    { date: '15 Aug 2026', value: 104, flag: 'abnormal', lab: 'Apex Clinical VI' },
+    { date: '20 Oct 2026', value: 92,  flag: 'normal',   lab: 'Apex Clinical VI' }
   ];
 
   const handleExplainResult = (testName: string, value: string, range: string) => {
@@ -39,11 +39,8 @@ export default function PatientDashboardPage() {
           <div className="space-y-1">
             <div className="flex flex-wrap items-center gap-2">
               <h1 className="text-xl sm:text-2xl font-bold text-[var(--text)]">Olumide Adeyemi</h1>
-              <span className="data-tag text-[9px] px-2.5 py-0.5 rounded-full glass border border-[var(--accent)] text-[var(--accent)]">
-                NDPA verified patient
-              </span>
-              <span className="data-tag text-[8px] px-1.5 py-0.2 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20">
-                Demo
+              <span className="data-tag text-[9px] px-2.5 py-0.5 rounded-full glass border border-[var(--accent)] text-[var(--accent)] font-sans">
+                Verified Patient
               </span>
             </div>
             <p className="text-xs text-[var(--text-muted)] font-mono">
@@ -85,7 +82,7 @@ export default function PatientDashboardPage() {
               : 'border-transparent text-[var(--text-muted)] hover:text-[var(--text)]'
           }`}
         >
-          Ed25519 signed results (3)
+          Verified lab reports (3)
         </button>
         <button
           onClick={() => setActiveTab('bookings')}
@@ -113,12 +110,12 @@ export default function PatientDashboardPage() {
                   tag="h2"
                 />
               </div>
-              <span className="data-tag text-xs px-3 py-1.5 rounded-full glass border border-[var(--accent)] text-[var(--accent)] self-start sm:self-auto">
+              <span className="data-tag text-xs px-3 py-1.5 rounded-full glass border border-[var(--accent)] text-[var(--accent)] self-start sm:self-auto font-sans">
                 Current: 92 mg/dL (Normal)
               </span>
             </div>
 
-            {/* Opaque Raised Visual Bar Chart Container */}
+            {/* Visual Bar Chart Container */}
             <div className="bg-[var(--bg-raised)] rounded-[22px] p-6 sm:p-8 border border-[var(--border)] space-y-6 shadow-inner">
               <div className="h-52 flex items-end justify-between gap-4 sm:gap-6 pt-8 px-2 sm:px-16 border-b border-[var(--border)] relative overflow-hidden">
                 {/* Reference line */}
@@ -168,19 +165,19 @@ export default function PatientDashboardPage() {
               </div>
             </div>
 
-            {/* Opaque Raised AI Explainer Callout */}
+            {/* Plain Language Explainer Callout */}
             <div className="p-5 rounded-[22px] bg-[var(--bg-raised)] border border-[var(--border)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm">
               <div className="space-y-1 text-xs">
-                <div className="font-bold text-[var(--text)]">Clinical continuity summary</div>
+                <div className="font-bold text-[var(--text)]">Longitudinal observation</div>
                 <p className="text-[var(--text-muted)]">
-                  Values have resolved from pre-diabetic elevation into normal fasting physiology.
+                  Values have resolved from pre-diabetic elevation into normal fasting physiology over 6 months.
                 </p>
               </div>
               <button
                 onClick={() => handleExplainResult('Fasting blood sugar', '92 mg/dL', '70 - 99 mg/dL')}
                 className="btn-primary-pill px-5 py-2.5 text-xs font-bold whitespace-nowrap cursor-pointer"
               >
-                Explain with AI assistant →
+                Explain in plain language →
               </button>
             </div>
           </div>
@@ -192,11 +189,11 @@ export default function PatientDashboardPage() {
         <div className="rounded-[28px] glass p-6 sm:p-8 space-y-6 shadow-xl border border-[var(--border)] card-hover-lift">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-[var(--border)] gap-2">
             <div>
-              <span className="eyebrow-label text-[var(--accent)]">Cryptographic records</span>
-              <h2 className="text-xl font-bold text-[var(--text)]">Digitally signed diagnostic reports</h2>
+              <span className="eyebrow-label text-[var(--accent)]">Official records</span>
+              <h2 className="text-xl font-bold text-[var(--text)]">Verified laboratory reports</h2>
             </div>
             <span className="data-tag text-xs text-[var(--gold)] font-mono">
-              ★ Ed25519 signature valid
+              ★ Cryptographic QR seal verified authentic
             </span>
           </div>
 
@@ -217,26 +214,26 @@ export default function PatientDashboardPage() {
                 {[
                   {
                     test: 'Fasting blood sugar (FBS)',
-                    lab: 'Synlab VI',
+                    lab: 'Apex Clinical VI',
                     date: '20 Oct 2026',
-                    approver: 'Dr. B. Balogun (FMLSCN)',
-                    token: 'verify-tok-hist-fbs-3',
+                    approver: 'Dr. B. Balogun (MLS Lic: 0481)',
+                    token: 'tok_fbs_948210',
                     value: '92 mg/dL'
                   },
                   {
                     test: 'Full blood count (FBC)',
-                    lab: 'Synlab VI',
+                    lab: 'Apex Clinical VI',
                     date: '15 Aug 2026',
-                    approver: 'Dr. B. Balogun (FMLSCN)',
-                    token: 'verify-tok-hist-fbs-2',
+                    approver: 'Dr. B. Balogun (MLS Lic: 0481)',
+                    token: 'tok_fbc_482910',
                     value: 'Hb 14.8 g/dL'
                   },
                   {
                     test: 'Lipid profile',
-                    lab: 'Medex Yaba',
+                    lab: 'Metro Diagnostic Centre Yaba',
                     date: '10 May 2026',
-                    approver: 'Dr. C. Adeleke (MLSCN)',
-                    token: 'verify-tok-hist-fbs-1',
+                    approver: 'Dr. C. Adeleke (MLS Lic: 0892)',
+                    token: 'tok_lipid_582910',
                     value: 'Chol 182 mg/dL'
                   }
                 ].map((row, idx) => (
@@ -251,7 +248,7 @@ export default function PatientDashboardPage() {
                         className="font-mono text-xs font-bold text-[var(--accent)] hover:underline inline-flex items-center gap-1"
                       >
                         <span className="text-[var(--gold)]">★</span>
-                        <span>QR proof</span>
+                        <span>QR seal</span>
                       </Link>
                     </td>
                     <td className="py-4 px-4 text-right space-x-2">
@@ -259,13 +256,13 @@ export default function PatientDashboardPage() {
                         onClick={() => handleExplainResult(row.test, row.value, '70 - 99 mg/dL')}
                         className="btn-secondary-pill px-3 py-1 text-xs cursor-pointer"
                       >
-                        AI explainer
+                        Explain
                       </button>
                       <Link
                         href={`/verify/${row.token}`}
                         className="btn-primary-pill px-3.5 py-1 text-xs inline-block"
                       >
-                        Verify
+                        View
                       </Link>
                     </td>
                   </tr>
@@ -281,8 +278,8 @@ export default function PatientDashboardPage() {
         <div className="rounded-[28px] glass p-6 sm:p-8 space-y-6 shadow-xl border border-[var(--border)] card-hover-lift">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-[var(--border)] gap-2">
             <div>
-              <span className="eyebrow-label text-[var(--accent)]">Active dispatch</span>
-              <h2 className="text-xl font-bold text-[var(--text)]">Live booking tracking</h2>
+              <span className="eyebrow-label text-[var(--accent)]">Appointment logistics</span>
+              <h2 className="text-xl font-bold text-[var(--text)]">Active booking status</h2>
             </div>
             <span className="data-tag text-xs font-mono font-bold text-[var(--accent)] px-3 py-1 rounded-full glass border border-[var(--accent)]">
               Ref: LL-202611-B892
@@ -291,34 +288,34 @@ export default function PatientDashboardPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs">
             <div className="space-y-3 p-6 rounded-[20px] bg-[var(--bg-raised)] border border-[var(--border)] shadow-inner">
-              <div className="font-bold text-[var(--text)] text-sm">Appointment logistics</div>
-              <div><strong className="text-[var(--text-muted)]">Laboratory:</strong> Synlab Diagnostics VI</div>
-              <div><strong className="text-[var(--text-muted)]">Collection:</strong> Home visit (Lekki Phase 1)</div>
-              <div><strong className="text-[var(--text-muted)]">Scheduled:</strong> 04 Nov 2026 · 08:00 - 09:00 AM</div>
+              <div className="font-bold text-[var(--text)] text-sm">Appointment details</div>
+              <div><strong className="text-[var(--text-muted)]">Facility:</strong> Apex Clinical Diagnostics VI</div>
+              <div><strong className="text-[var(--text-muted)]">Collection mode:</strong> Home visit (Lekki Phase 1)</div>
+              <div><strong className="text-[var(--text-muted)]">Scheduled:</strong> 15 Nov 2026 · 08:00 - 09:00 AM</div>
               <div><strong className="text-[var(--text-muted)]">Phlebotomist:</strong> Blessing Ibrahim (+2348020000004)</div>
-              <div><strong className="text-[var(--text-muted)]">Settlement:</strong> ₦6,200 (Paid via Paystack)</div>
+              <div><strong className="text-[var(--text-muted)]">Total settled:</strong> ₦6,200 (Paid via Paystack)</div>
             </div>
 
             <div className="space-y-3 p-6 rounded-[20px] bg-[var(--bg-raised)] border border-[var(--border)] shadow-inner">
-              <div className="font-bold text-[var(--text)] text-sm">Preparation protocols</div>
+              <div className="font-bold text-[var(--text)] text-sm">Preparation guidelines</div>
               <ul className="list-disc list-inside space-y-1.5 text-[var(--text-muted)]">
-                <li>Strict 10-hour overnight fast for fasting blood sugar.</li>
-                <li>Water is permitted. Avoid beverages, juice, or tea.</li>
-                <li>Phlebotomist will verify your identity before drawing sample.</li>
+                <li>Strict 10-hour overnight fast for fasting blood sugar test.</li>
+                <li>Water is permitted. Avoid beverages, juice, coffee, or tea.</li>
+                <li>Phlebotomist will verify your barcoded sample kit on arrival.</li>
               </ul>
             </div>
           </div>
         </div>
       )}
 
-      {/* AI Explainer Modal */}
+      {/* Plain Language Explainer Modal */}
       {explainingResult && (
         <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in duration-200">
           <div className="glass-strong rounded-[28px] max-w-lg w-full p-6 sm:p-8 space-y-5 border border-[var(--border)] shadow-2xl animate-in zoom-in-95 duration-150">
             <div className="flex items-center justify-between pb-3 border-b border-[var(--border)]">
               <div className="flex items-center gap-2">
-                <span className="data-tag text-[10px] px-2 py-0.5 rounded-full bg-[var(--accent)]/15 text-[var(--accent)] border border-[var(--accent)]/30">
-                  AI assist
+                <span className="data-tag text-[10px] px-2 py-0.5 rounded-full bg-[var(--accent)]/15 text-[var(--accent)] border border-[var(--accent)]/30 font-sans">
+                  Plain language
                 </span>
                 <h3 className="font-bold text-[var(--text)] text-base">{explainingResult.testName}</h3>
               </div>

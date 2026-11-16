@@ -4,8 +4,8 @@ import { Navbar } from '../shared/components/Navbar';
 import { Footer } from '../shared/components/Footer';
 
 export const metadata: Metadata = {
-  title: 'Lablink — Book the test. Trust the result.',
-  description: 'Next-generation clinical diagnostic infrastructure connecting Nigerian patients with accredited laboratories through verified pricing, home collection, and cryptographically verified results.'
+  title: 'Lablinks — Find a licensed lab. Book your test. Get a report you can verify.',
+  description: 'Connect with MLSCN licensed diagnostic laboratories in Nigeria, compare transparent test pricing, book walk-ins or home sample collections, and verify authentic diagnostic reports online.'
 };
 
 export default function RootLayout({
@@ -14,7 +14,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning className="dark" data-theme="dark">
+    <html lang="en" suppressHydrationWarning className="light" data-theme="light">
       <head>
         <script
           dangerouslySetInnerHTML={{
@@ -22,7 +22,7 @@ export default function RootLayout({
               (function() {
                 try {
                   var t = localStorage.getItem('lablink-theme');
-                  if (!t) t = 'dark';
+                  if (!t) t = 'light';
                   document.documentElement.setAttribute('data-theme', t);
                   if (t === 'dark') {
                     document.documentElement.classList.add('dark');
@@ -30,8 +30,8 @@ export default function RootLayout({
                     document.documentElement.classList.remove('dark');
                   }
                 } catch (e) {
-                  document.documentElement.setAttribute('data-theme', 'dark');
-                  document.documentElement.classList.add('dark');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  document.documentElement.classList.remove('dark');
                 }
               })();
             `

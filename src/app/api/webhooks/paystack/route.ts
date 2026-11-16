@@ -43,7 +43,7 @@ export async function POST(req: NextRequest) {
           phone: data.customer?.phone
         },
         event: 'booking_confirmed',
-        title: 'Lablink Booking Confirmed',
+        title: 'Lablinks Booking Confirmed',
         message: `Your booking ${reference} has been confirmed. Payment of ₦${(data.amount / 100).toLocaleString()} received successfully.`,
         channels: ['sms', 'email']
       });

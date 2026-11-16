@@ -23,9 +23,9 @@ export function AccentHeading({
   const Tag = tag;
 
   const sizeClasses = {
-    hero: 'text-5xl sm:text-7xl lg:text-8xl tracking-[-0.04em] leading-[0.96]',
-    section: 'text-3xl sm:text-4xl lg:text-5xl tracking-[-0.03em] leading-[1.05]',
-    card: 'text-xl sm:text-2xl tracking-[-0.02em] leading-tight',
+    hero: 'text-3xl sm:text-5xl lg:text-7xl tracking-[-0.04em] leading-[1.08]',
+    section: 'text-2xl sm:text-3xl lg:text-4xl tracking-[-0.03em] leading-[1.1]',
+    card: 'text-lg sm:text-xl tracking-[-0.02em] leading-tight',
   }[size];
 
   const alignClasses = {

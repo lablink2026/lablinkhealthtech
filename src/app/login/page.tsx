@@ -10,12 +10,12 @@ export default function LoginPage() {
   const [roleTab, setRoleTab] = useState<'patient' | 'lab'>('patient');
 
   // Patient inputs
-  const [patientIdentifier, setPatientIdentifier] = useState('+2348030000001');
-  const [patientOtp, setPatientOtp] = useState('123456');
+  const [patientIdentifier, setPatientIdentifier] = useState('');
+  const [patientOtp, setPatientOtp] = useState('');
 
   // Lab inputs
-  const [labEmail, setLabEmail] = useState('admin@synlabvi.ng');
-  const [labPassword, setLabPassword] = useState('Lablink2026!');
+  const [labEmail, setLabEmail] = useState('');
+  const [labPassword, setLabPassword] = useState('');
 
   const handlePatientLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,7 +24,7 @@ export default function LoginPage() {
 
   const handleLabLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    router.push('/lab/synlab-vi/dashboard');
+    router.push('/lab/apex-vi/dashboard');
   };
 
   return (
@@ -44,13 +44,13 @@ export default function LoginPage() {
               <path d="M7 11V7a5 5 0 0 1 10 0v4" />
             </svg>
             <span className="eyebrow-label text-[10px] text-[var(--accent)]">
-              Unified authentication
+              Secure authentication
             </span>
           </div>
 
           <AccentHeading
             plainText="Sign in to"
-            accentText="Lablink."
+            accentText="Lablinks."
             size="section"
             tag="h1"
             align="center"
@@ -65,9 +65,9 @@ export default function LoginPage() {
         <div className="p-1 rounded-full glass border border-[var(--border)] grid grid-cols-2 text-xs font-semibold">
           <button
             onClick={() => setRoleTab('patient')}
-            className={`py-2.5 rounded-full transition-all flex items-center justify-center gap-2 ${
+            className={`py-2.5 rounded-full transition-all flex items-center justify-center gap-2 cursor-pointer ${
               roleTab === 'patient'
-                ? 'bg-[var(--accent)] text-[#0A0F0D] font-bold shadow-sm'
+                ? 'bg-[var(--accent)] text-white font-bold shadow-sm'
                 : 'text-[var(--text-muted)] hover:text-[var(--text)]'
             }`}
           >
@@ -79,9 +79,9 @@ export default function LoginPage() {
 
           <button
             onClick={() => setRoleTab('lab')}
-            className={`py-2.5 rounded-full transition-all flex items-center justify-center gap-2 ${
+            className={`py-2.5 rounded-full transition-all flex items-center justify-center gap-2 cursor-pointer ${
               roleTab === 'lab'
-                ? 'bg-[var(--accent)] text-[#0A0F0D] font-bold shadow-sm'
+                ? 'bg-[var(--accent)] text-white font-bold shadow-sm'
                 : 'text-[var(--text-muted)] hover:text-[var(--text)]'
             }`}
           >
@@ -93,32 +93,27 @@ export default function LoginPage() {
         </div>
 
         {/* Centered Glass Card */}
-        <div className="rounded-[24px] glass p-6 sm:p-8 space-y-6 shadow-2xl">
+        <div className="rounded-[28px] glass p-6 sm:p-8 space-y-6 shadow-2xl border border-[var(--border)] card-hover-lift">
           {roleTab === 'patient' ? (
             <form onSubmit={handlePatientLogin} className="space-y-4">
               <div className="space-y-1.5">
                 <label className="text-xs font-semibold text-[var(--text)]">
                   Nigerian phone number
                 </label>
-                <div className="relative">
-                  <input
-                    type="tel"
-                    value={patientIdentifier}
-                    onChange={(e) => setPatientIdentifier(e.target.value)}
-                    placeholder="+234..."
-                    required
-                    className="w-full px-4 py-3 rounded-full bg-[var(--bg-raised)] text-[var(--text)] text-xs sm:text-sm border border-[var(--border)] focus:border-[var(--accent)] focus-visible:ring-2 focus-visible:ring-[var(--accent)] outline-none"
-                  />
-                  <span className="absolute right-3.5 top-3 data-tag text-[9px] px-1.5 py-0.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20">
-                    Demo
-                  </span>
-                </div>
+                <input
+                  type="tel"
+                  value={patientIdentifier}
+                  onChange={(e) => setPatientIdentifier(e.target.value)}
+                  placeholder="+234 803 000 0000"
+                  required
+                  className="w-full px-4 py-3 rounded-full bg-[var(--bg-raised)] text-[var(--text)] text-xs sm:text-sm border border-[var(--border)] focus:border-[var(--accent)] focus-visible:ring-2 focus-visible:ring-[var(--accent)] outline-none"
+                />
               </div>
 
               <div className="space-y-1.5">
                 <div className="flex items-center justify-between">
                   <label className="text-xs font-semibold text-[var(--text)]">
-                    One-time verification code
+                    One-time verification code (OTP)
                   </label>
                   <span className="text-[11px] text-[var(--accent)] font-medium cursor-pointer hover:underline">
                     Resend code
@@ -128,24 +123,16 @@ export default function LoginPage() {
                   type="text"
                   value={patientOtp}
                   onChange={(e) => setPatientOtp(e.target.value)}
+                  placeholder="Enter 6-digit code"
                   maxLength={6}
                   required
                   className="w-full px-4 py-3 rounded-full bg-[var(--bg-raised)] text-[var(--text)] text-xs sm:text-sm tracking-widest font-mono text-center border border-[var(--border)] focus:border-[var(--accent)] focus-visible:ring-2 focus-visible:ring-[var(--accent)] outline-none"
                 />
               </div>
 
-              <div className="p-3 rounded-xl glass border border-[var(--border)] text-[11px] text-[var(--text-muted)] space-y-1">
-                <div className="font-semibold text-[var(--text)] flex items-center justify-between">
-                  <span>Pre-filled demo credentials:</span>
-                  <span className="data-tag text-[8px] px-1.5 py-0.2 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20">Demo</span>
-                </div>
-                <div className="font-mono">Patient: Olumide Adeyemi (+2348030000001)</div>
-                <div className="font-mono">Code: 123456</div>
-              </div>
-
               <button
                 type="submit"
-                className="w-full btn-primary-pill py-3.5 text-xs sm:text-sm font-bold flex items-center justify-center gap-2"
+                className="w-full btn-primary-pill py-3.5 text-xs sm:text-sm font-bold flex items-center justify-center gap-2 mt-2 cursor-pointer"
               >
                 <span>Access patient portal</span>
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
@@ -159,18 +146,14 @@ export default function LoginPage() {
                 <label className="text-xs font-semibold text-[var(--text)]">
                   Work email address
                 </label>
-                <div className="relative">
-                  <input
-                    type="email"
-                    value={labEmail}
-                    onChange={(e) => setLabEmail(e.target.value)}
-                    required
-                    className="w-full px-4 py-3 rounded-full bg-[var(--bg-raised)] text-[var(--text)] text-xs sm:text-sm border border-[var(--border)] focus:border-[var(--accent)] focus-visible:ring-2 focus-visible:ring-[var(--accent)] outline-none"
-                  />
-                  <span className="absolute right-3.5 top-3 data-tag text-[9px] px-1.5 py-0.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20">
-                    Demo
-                  </span>
-                </div>
+                <input
+                  type="email"
+                  value={labEmail}
+                  onChange={(e) => setLabEmail(e.target.value)}
+                  placeholder="admin@laboratory.ng"
+                  required
+                  className="w-full px-4 py-3 rounded-full bg-[var(--bg-raised)] text-[var(--text)] text-xs sm:text-sm border border-[var(--border)] focus:border-[var(--accent)] focus-visible:ring-2 focus-visible:ring-[var(--accent)] outline-none"
+                />
               </div>
 
               <div className="space-y-1.5">
@@ -186,23 +169,15 @@ export default function LoginPage() {
                   type="password"
                   value={labPassword}
                   onChange={(e) => setLabPassword(e.target.value)}
+                  placeholder="••••••••••••"
                   required
                   className="w-full px-4 py-3 rounded-full bg-[var(--bg-raised)] text-[var(--text)] text-xs sm:text-sm border border-[var(--border)] focus:border-[var(--accent)] focus-visible:ring-2 focus-visible:ring-[var(--accent)] outline-none"
                 />
               </div>
 
-              <div className="p-3 rounded-xl glass border border-[var(--border)] text-[11px] text-[var(--text-muted)] space-y-1">
-                <div className="font-semibold text-[var(--text)] flex items-center justify-between">
-                  <span>Pre-filled demo credentials:</span>
-                  <span className="data-tag text-[8px] px-1.5 py-0.2 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20">Demo</span>
-                </div>
-                <div className="font-mono">Lab: Synlab Diagnostics VI</div>
-                <div className="font-mono">Email: admin@synlabvi.ng</div>
-              </div>
-
               <button
                 type="submit"
-                className="w-full btn-primary-pill py-3.5 text-xs sm:text-sm font-bold flex items-center justify-center gap-2"
+                className="w-full btn-primary-pill py-3.5 text-xs sm:text-sm font-bold flex items-center justify-center gap-2 mt-2 cursor-pointer"
               >
                 <span>Launch lab console</span>
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
@@ -212,14 +187,13 @@ export default function LoginPage() {
             </form>
           )}
 
-          <div className="text-center pt-2">
-            <Link
-              href="/"
-              className="text-xs text-[var(--text-muted)] hover:text-[var(--text)] transition-colors inline-flex items-center gap-1"
-            >
-              <span>←</span>
-              <span>Back to home</span>
+          <div className="pt-2 border-t border-[var(--border)] flex justify-between items-center text-xs">
+            <Link href="/" className="text-[var(--text-muted)] hover:text-[var(--text)] transition">
+              ← Return to homepage
             </Link>
+            <span className="text-[var(--text-muted)]">
+              Need help? <a href="mailto:support@lablinks.com" className="text-[var(--accent)] hover:underline">Support</a>
+            </span>
           </div>
         </div>
       </div>

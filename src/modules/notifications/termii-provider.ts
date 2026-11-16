@@ -7,7 +7,7 @@ export class TermiiSMSProvider implements NotificationProvider {
 
   constructor(apiKey?: string, senderId?: string) {
     this.apiKey = apiKey || process.env.TERMII_API_KEY || '';
-    this.senderId = senderId || process.env.TERMII_SENDER_ID || 'Lablink';
+    this.senderId = senderId || process.env.TERMII_SENDER_ID || 'Lablinks';
   }
 
   async send(payload: NotificationPayload): Promise<{ success: boolean; messageId: string }> {

@@ -2,35 +2,44 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export function Logo({ className = '' }: { className?: string }) {
   return (
-    <Link href="/" className={`flex items-center gap-3 group select-none ${className}`}>
-      {/* Bespoke Lablink Diagnostic Hex Shield */}
-      <div className="relative w-10 h-10 rounded-2xl glass flex items-center justify-center p-2 border border-[var(--border)] group-hover:border-[var(--accent)] transition-colors shadow-sm">
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          className="w-5 h-5 text-[var(--accent)] transition-transform duration-300 group-hover:scale-105"
-          stroke="currentColor"
-          strokeWidth="1.75"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          {/* Diagnostic droplet within circular seal */}
-          <circle cx="12" cy="12" r="9" stroke="var(--border)" strokeWidth="1.2" />
-          <circle cx="12" cy="12" r="4.5" stroke="var(--accent)" strokeWidth="1.6" />
-          <path d="M12 7.5v1.5M12 15v1.5M7.5 12h1.5M15 12h1.5" stroke="var(--gold)" strokeWidth="1.5" />
-        </svg>
+    <Link
+      href="/"
+      className={`inline-flex items-center gap-1.5 sm:gap-2 group select-none transition-transform duration-200 active:scale-95 ${className}`}
+      aria-label="Lablinks - Medical Laboratory Testing Network"
+    >
+      {/* Sleek, scaled-down logo mark (Concept 2 Infinity Loop) */}
+      <div className="relative flex items-center justify-center shrink-0">
+        {/* Light theme mark */}
+        <Image
+          src="/images/logo-mark.png"
+          alt="Lablinks Mark"
+          width={48}
+          height={22}
+          className="h-5 sm:h-5.5 md:h-6 w-auto object-contain transition-transform duration-200 group-hover:scale-105 dark:hidden"
+          priority
+        />
+        {/* Dark theme luminous mark */}
+        <Image
+          src="/images/logo-mark-dark.png"
+          alt="Lablinks Mark"
+          width={48}
+          height={22}
+          className="h-5 sm:h-5.5 md:h-6 w-auto object-contain transition-transform duration-200 group-hover:scale-105 hidden dark:block"
+          priority
+        />
       </div>
 
-      <div className="flex flex-col">
-        <div className="flex items-center font-bold tracking-tight text-lg text-[var(--text)] leading-none">
-          <span>Lablink</span>
-          <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)] ml-1"></span>
-        </div>
-        <span className="data-tag text-[9px] text-[var(--text-muted)] mt-1">
-          Diagnostics platform
+      {/* Brand Typography: crisp native vector font, pixel-perfect on both themes */}
+      <div className="flex items-center tracking-[-0.03em] font-extrabold text-[17px] sm:text-lg md:text-xl leading-none">
+        <span className="text-[var(--text)] transition-colors">
+          Lab
+        </span>
+        <span className="text-[var(--accent)] transition-colors">
+          links
         </span>
       </div>
     </Link>

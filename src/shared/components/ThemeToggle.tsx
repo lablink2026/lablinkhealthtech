@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 
 export function ThemeToggle({ className = '' }: { className?: string }) {
-  const [theme, setTheme] = useState<'light' | 'dark'>('dark');
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -14,14 +14,12 @@ export function ThemeToggle({ className = '' }: { className?: string }) {
         setTheme(stored);
         applyTheme(stored);
       } else {
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const initial = prefersDark ? 'dark' : 'dark'; // default to dark per brief
-        setTheme(initial);
-        applyTheme(initial);
+        // Default to light theme per specification
+        setTheme('light');
+        applyTheme('light');
       }
     } catch {
-      // Fallback if localStorage is inaccessible
-      applyTheme('dark');
+      applyTheme('light');
     }
   }, []);
 
@@ -52,41 +50,39 @@ export function ThemeToggle({ className = '' }: { className?: string }) {
   return (
     <button
       onClick={toggleTheme}
-      type="button"
-      className={`btn-icon-glass ${className}`}
-      title={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
-      aria-label="Toggle theme"
+      aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+      className={`btn-icon-glass relative w-[44px] h-[44px] flex items-center justify-center rounded-xl cursor-pointer transition-colors ${className}`}
+      title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
     >
       {theme === 'dark' ? (
-        // Sun icon (thin line 1.75px)
+        // Sun Icon
         <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="18"
-          height="18"
-          viewBox="0 0 24 24"
+          className="w-4 h-4 text-amber-400 transition-transform duration-300 hover:rotate-45"
           fill="none"
+          viewBox="0 0 24 24"
           stroke="currentColor"
-          strokeWidth="1.75"
-          strokeLinecap="round"
-          strokeLinejoin="round"
+          strokeWidth="2"
         >
-          <circle cx="12" cy="12" r="4" />
-          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+          />
         </svg>
       ) : (
-        // Moon icon (thin line 1.75px)
+        // Moon Icon
         <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="18"
-          height="18"
-          viewBox="0 0 24 24"
+          className="w-4 h-4 text-[var(--accent)] transition-transform duration-300 hover:-rotate-12"
           fill="none"
+          viewBox="0 0 24 24"
           stroke="currentColor"
-          strokeWidth="1.75"
-          strokeLinecap="round"
-          strokeLinejoin="round"
+          strokeWidth="2"
         >
-          <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+          />
         </svg>
       )}
     </button>
